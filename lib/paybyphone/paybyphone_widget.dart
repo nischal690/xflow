@@ -79,6 +79,7 @@ class _PaybyphoneWidgetState extends State<PaybyphoneWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

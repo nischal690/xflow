@@ -1,38 +1,53 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'idverification_record.g.dart';
+class IdverificationRecord extends FirestoreRecord {
+  IdverificationRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class IdverificationRecord
-    implements Built<IdverificationRecord, IdverificationRecordBuilder> {
-  static Serializer<IdverificationRecord> get serializer =>
-      _$idverificationRecordSerializer;
+  // "idissuedcountry" field.
+  String? _idissuedcountry;
+  String get idissuedcountry => _idissuedcountry ?? '';
+  bool hasIdissuedcountry() => _idissuedcountry != null;
 
-  String? get idissuedcountry;
+  // "idtype" field.
+  String? _idtype;
+  String get idtype => _idtype ?? '';
+  bool hasIdtype() => _idtype != null;
 
-  String? get idtype;
+  // "idfront" field.
+  String? _idfront;
+  String get idfront => _idfront ?? '';
+  bool hasIdfront() => _idfront != null;
 
-  String? get idfront;
+  // "idback" field.
+  String? _idback;
+  String get idback => _idback ?? '';
+  bool hasIdback() => _idback != null;
 
-  String? get idback;
-
-  String? get idpdf;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
+  // "idpdf" field.
+  String? _idpdf;
+  String get idpdf => _idpdf ?? '';
+  bool hasIdpdf() => _idpdf != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(IdverificationRecordBuilder builder) => builder
-    ..idissuedcountry = ''
-    ..idtype = ''
-    ..idfront = ''
-    ..idback = ''
-    ..idpdf = '';
+  void _initializeFields() {
+    _idissuedcountry = snapshotData['idissuedcountry'] as String?;
+    _idtype = snapshotData['idtype'] as String?;
+    _idfront = snapshotData['idfront'] as String?;
+    _idback = snapshotData['idback'] as String?;
+    _idpdf = snapshotData['idpdf'] as String?;
+  }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -42,23 +57,27 @@ abstract class IdverificationRecord
   static DocumentReference createDoc(DocumentReference parent) =>
       parent.collection('idverification').doc();
 
-  static Stream<IdverificationRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<IdverificationRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => IdverificationRecord.fromSnapshot(s));
 
   static Future<IdverificationRecord> getDocumentOnce(DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => IdverificationRecord.fromSnapshot(s));
 
-  IdverificationRecord._();
-  factory IdverificationRecord(
-          [void Function(IdverificationRecordBuilder) updates]) =
-      _$IdverificationRecord;
+  static IdverificationRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      IdverificationRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static IdverificationRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      IdverificationRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'IdverificationRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createIdverificationRecordData({
@@ -68,16 +87,14 @@ Map<String, dynamic> createIdverificationRecordData({
   String? idback,
   String? idpdf,
 }) {
-  final firestoreData = serializers.toFirestore(
-    IdverificationRecord.serializer,
-    IdverificationRecord(
-      (i) => i
-        ..idissuedcountry = idissuedcountry
-        ..idtype = idtype
-        ..idfront = idfront
-        ..idback = idback
-        ..idpdf = idpdf,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'idissuedcountry': idissuedcountry,
+      'idtype': idtype,
+      'idfront': idfront,
+      'idback': idback,
+      'idpdf': idpdf,
+    }.withoutNulls,
   );
 
   return firestoreData;

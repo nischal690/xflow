@@ -1,26 +1,29 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'interest_record.g.dart';
+class InterestRecord extends FirestoreRecord {
+  InterestRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class InterestRecord
-    implements Built<InterestRecord, InterestRecordBuilder> {
-  static Serializer<InterestRecord> get serializer =>
-      _$interestRecordSerializer;
-
-  String? get interestname;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
+  // "interestname" field.
+  String? _interestname;
+  String get interestname => _interestname ?? '';
+  bool hasInterestname() => _interestname != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(InterestRecordBuilder builder) =>
-      builder..interestname = '';
+  void _initializeFields() {
+    _interestname = snapshotData['interestname'] as String?;
+  }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -30,32 +33,36 @@ abstract class InterestRecord
   static DocumentReference createDoc(DocumentReference parent) =>
       parent.collection('interest').doc();
 
-  static Stream<InterestRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<InterestRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => InterestRecord.fromSnapshot(s));
 
-  static Future<InterestRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<InterestRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => InterestRecord.fromSnapshot(s));
 
-  InterestRecord._();
-  factory InterestRecord([void Function(InterestRecordBuilder) updates]) =
-      _$InterestRecord;
+  static InterestRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      InterestRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static InterestRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      InterestRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'InterestRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createInterestRecordData({
   String? interestname,
 }) {
-  final firestoreData = serializers.toFirestore(
-    InterestRecord.serializer,
-    InterestRecord(
-      (i) => i..interestname = interestname,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'interestname': interestname,
+    }.withoutNulls,
   );
 
   return firestoreData;

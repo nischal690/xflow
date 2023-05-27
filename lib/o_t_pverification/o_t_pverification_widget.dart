@@ -49,6 +49,7 @@ class _OTPverificationWidgetState extends State<OTPverificationWidget> {
       _model.timerController.onExecute.add(StopWatchExecute.start);
     });
 
+    authManager.handlePhoneAuthStateChanges(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -97,6 +98,7 @@ class _OTPverificationWidgetState extends State<OTPverificationWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -273,10 +275,11 @@ class _OTPverificationWidgetState extends State<OTPverificationWidget> {
                                                       .beginPhoneAuth(
                                                     context: context,
                                                     phoneNumber: phoneNumberVal,
-                                                    onCodeSent: () async {
+                                                    onCodeSent:
+                                                        (context) async {
                                                       context.goNamedAuth(
                                                         'OTPverification',
-                                                        mounted,
+                                                        context.mounted,
                                                         ignoreRedirect: true,
                                                       );
                                                     },
@@ -449,7 +452,7 @@ class _OTPverificationWidgetState extends State<OTPverificationWidget> {
                                 logFirebaseEvent('Button_navigate_to');
 
                                 context.pushNamedAuth(
-                                    'createyourprofile', mounted);
+                                    'createyourprofile', context.mounted);
                               },
                               text: 'Verify',
                               options: FFButtonOptions(

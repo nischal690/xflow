@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'backend/backend.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import 'backend/api_requests/api_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -11,20 +12,14 @@ class FFAppState extends ChangeNotifier {
     return _instance;
   }
 
-  FFAppState._internal() {
-    initializePersistedState();
-  }
+  FFAppState._internal();
 
-  Future initializePersistedState() async {
-    prefs = await SharedPreferences.getInstance();
-  }
+  Future initializePersistedState() async {}
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
-
-  late SharedPreferences prefs;
 
   bool _Home = false;
   bool get Home => _Home;
@@ -140,6 +135,13 @@ class FFAppState extends ChangeNotifier {
     _interest.removeAt(_index);
   }
 
+  void updateInterestAtIndex(
+    int _index,
+    Function(String) updateFn,
+  ) {
+    updateFn(_interest[_index]);
+  }
+
   String _Documenttype = '';
   String get Documenttype => _Documenttype;
   set Documenttype(String _value) {
@@ -224,6 +226,13 @@ class FFAppState extends ChangeNotifier {
     _posttags.removeAt(_index);
   }
 
+  void updatePosttagsAtIndex(
+    int _index,
+    Function(String) updateFn,
+  ) {
+    updateFn(_posttags[_index]);
+  }
+
   String _tag = '';
   String get tag => _tag;
   set tag(String _value) {
@@ -246,6 +255,13 @@ class FFAppState extends ChangeNotifier {
 
   void removeAtIndexFromPostPhotos(int _index) {
     _postPhotos.removeAt(_index);
+  }
+
+  void updatePostPhotosAtIndex(
+    int _index,
+    Function(String) updateFn,
+  ) {
+    updateFn(_postPhotos[_index]);
   }
 
   String _video = '';
@@ -294,6 +310,13 @@ class FFAppState extends ChangeNotifier {
 
   void removeAtIndexFromGuidecities(int _index) {
     _guidecities.removeAt(_index);
+  }
+
+  void updateGuidecitiesAtIndex(
+    int _index,
+    Function(String) updateFn,
+  ) {
+    updateFn(_guidecities[_index]);
   }
 }
 

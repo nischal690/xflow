@@ -79,6 +79,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

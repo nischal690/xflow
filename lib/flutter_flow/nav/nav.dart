@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow_theme.dart';
-import '../../backend/backend.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 import '../../backend/push_notifications/push_notifications_handler.dart'
@@ -86,14 +88,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => HistoryWidget(),
         ),
         FFRoute(
-          name: 'Paybyphone',
-          path: '/paybyphone',
-          builder: (context, params) => PaybyphoneWidget(),
-        ),
-        FFRoute(
           name: 'Notification',
           path: '/notification',
           builder: (context, params) => NotificationWidget(),
+        ),
+        FFRoute(
+          name: 'Paybyphone',
+          path: '/paybyphone',
+          builder: (context, params) => PaybyphoneWidget(),
         ),
         FFRoute(
           name: 'Wallet',
@@ -129,14 +131,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => OTPverificationloginWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => HomePageWidget(),
-        ),
-        FFRoute(
           name: 'Register',
           path: '/register',
           builder: (context, params) => RegisterWidget(),
+        ),
+        FFRoute(
+          name: 'HomePage',
+          path: '/homePage',
+          builder: (context, params) => HomePageWidget(),
         ),
         FFRoute(
           name: 'landingscreen2',
@@ -169,11 +171,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => Createyourprofile4Widget(),
         ),
         FFRoute(
-          name: 'createyourprofile',
-          path: '/createyourprofile',
-          builder: (context, params) => CreateyourprofileWidget(),
-        ),
-        FFRoute(
           name: 'createyourprofile3',
           path: '/createyourprofile3',
           builder: (context, params) => Createyourprofile3Widget(),
@@ -182,6 +179,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'CountrySelector',
           path: '/countrySelector',
           builder: (context, params) => CountrySelectorWidget(),
+        ),
+        FFRoute(
+          name: 'createyourprofile',
+          path: '/createyourprofile',
+          builder: (context, params) => CreateyourprofileWidget(),
         ),
         FFRoute(
           name: 'Discover',
@@ -220,12 +222,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AiChatWidget(),
         ),
         FFRoute(
+          name: 'Postdetails',
+          path: '/postdetails',
+          builder: (context, params) => PostdetailsWidget(
+            userpostref: params.getParam('userpostref',
+                ParamType.DocumentReference, false, ['userspost']),
+          ),
+        ),
+        FFRoute(
           name: 'verfyingastravellers',
           path: '/verfyingastravellers',
           builder: (context, params) => VerfyingastravellersWidget(),
+        ),
+        FFRoute(
+          name: 'editProfile',
+          path: '/editProfile',
+          builder: (context, params) => EditProfileWidget(),
+        ),
+        FFRoute(
+          name: 'fddvm',
+          path: '/fddvm',
+          builder: (context, params) => FddvmWidget(
+            currency: params.getParam('currency', ParamType.String),
+            currencyname: params.getParam('currencyname', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'WalletCopy',
+          path: '/walletCopy',
+          builder: (context, params) => WalletCopyWidget(),
+        ),
+        FFRoute(
+          name: 'fddvmCopy',
+          path: '/fddvmCopy',
+          builder: (context, params) => FddvmCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -358,7 +392,8 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionNamePath);
+    return deserializeParam<T>(param, type, isList,
+        collectionNamePath: collectionNamePath);
   }
 }
 

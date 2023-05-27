@@ -102,7 +102,7 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 10.0),
                               child: Text(
-                                containerUsersRecord.displayName!,
+                                containerUsersRecord.displayName,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -113,7 +113,7 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
                               ),
                             ),
                             Text(
-                              containerUsersRecord.uid!,
+                              containerUsersRecord.uid,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(

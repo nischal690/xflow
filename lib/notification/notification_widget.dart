@@ -80,6 +80,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

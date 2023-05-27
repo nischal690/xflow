@@ -1,90 +1,148 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'userspost_record.g.dart';
+class UserspostRecord extends FirestoreRecord {
+  UserspostRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class UserspostRecord
-    implements Built<UserspostRecord, UserspostRecordBuilder> {
-  static Serializer<UserspostRecord> get serializer =>
-      _$userspostRecordSerializer;
+  // "content" field.
+  String? _content;
+  String get content => _content ?? '';
+  bool hasContent() => _content != null;
 
-  String? get content;
+  // "userref" field.
+  DocumentReference? _userref;
+  DocumentReference? get userref => _userref;
+  bool hasUserref() => _userref != null;
 
-  DocumentReference? get userref;
+  // "timeanddate" field.
+  DateTime? _timeanddate;
+  DateTime? get timeanddate => _timeanddate;
+  bool hasTimeanddate() => _timeanddate != null;
 
-  DateTime? get timeanddate;
+  // "tag" field.
+  String? _tag;
+  String get tag => _tag ?? '';
+  bool hasTag() => _tag != null;
 
-  String? get tag;
+  // "smileys" field.
+  List<DocumentReference>? _smileys;
+  List<DocumentReference> get smileys => _smileys ?? const [];
+  bool hasSmileys() => _smileys != null;
 
-  BuiltList<DocumentReference>? get smileys;
+  // "angry" field.
+  List<DocumentReference>? _angry;
+  List<DocumentReference> get angry => _angry ?? const [];
+  bool hasAngry() => _angry != null;
 
-  BuiltList<DocumentReference>? get angry;
+  // "reactionbutton" field.
+  bool? _reactionbutton;
+  bool get reactionbutton => _reactionbutton ?? false;
+  bool hasReactionbutton() => _reactionbutton != null;
 
-  bool? get reactionbutton;
+  // "savedby" field.
+  List<DocumentReference>? _savedby;
+  List<DocumentReference> get savedby => _savedby ?? const [];
+  bool hasSavedby() => _savedby != null;
 
-  BuiltList<DocumentReference>? get savedby;
+  // "photos" field.
+  List<String>? _photos;
+  List<String> get photos => _photos ?? const [];
+  bool hasPhotos() => _photos != null;
 
-  BuiltList<String>? get photos;
+  // "video" field.
+  String? _video;
+  String get video => _video ?? '';
+  bool hasVideo() => _video != null;
 
-  String? get video;
+  // "hearts" field.
+  List<DocumentReference>? _hearts;
+  List<DocumentReference> get hearts => _hearts ?? const [];
+  bool hasHearts() => _hearts != null;
 
-  BuiltList<DocumentReference>? get hearts;
+  // "sad" field.
+  List<DocumentReference>? _sad;
+  List<DocumentReference> get sad => _sad ?? const [];
+  bool hasSad() => _sad != null;
 
-  BuiltList<DocumentReference>? get sad;
+  // "location" field.
+  LocationStruct? _location;
+  LocationStruct get location => _location ?? LocationStruct();
+  bool hasLocation() => _location != null;
 
-  LocationStruct get location;
+  // "postTags" field.
+  List<String>? _postTags;
+  List<String> get postTags => _postTags ?? const [];
+  bool hasPostTags() => _postTags != null;
 
-  BuiltList<String>? get postTags;
+  // "emoji" field.
+  bool? _emoji;
+  bool get emoji => _emoji ?? false;
+  bool hasEmoji() => _emoji != null;
 
-  bool? get emoji;
+  // "audio" field.
+  String? _audio;
+  String get audio => _audio ?? '';
+  bool hasAudio() => _audio != null;
 
-  String? get audio;
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
 
-  String? get type;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(UserspostRecordBuilder builder) => builder
-    ..content = ''
-    ..tag = ''
-    ..smileys = ListBuilder()
-    ..angry = ListBuilder()
-    ..reactionbutton = false
-    ..savedby = ListBuilder()
-    ..photos = ListBuilder()
-    ..video = ''
-    ..hearts = ListBuilder()
-    ..sad = ListBuilder()
-    ..location = LocationStructBuilder()
-    ..postTags = ListBuilder()
-    ..emoji = false
-    ..audio = ''
-    ..type = '';
+  void _initializeFields() {
+    _content = snapshotData['content'] as String?;
+    _userref = snapshotData['userref'] as DocumentReference?;
+    _timeanddate = snapshotData['timeanddate'] as DateTime?;
+    _tag = snapshotData['tag'] as String?;
+    _smileys = getDataList(snapshotData['smileys']);
+    _angry = getDataList(snapshotData['angry']);
+    _reactionbutton = snapshotData['reactionbutton'] as bool?;
+    _savedby = getDataList(snapshotData['savedby']);
+    _photos = getDataList(snapshotData['photos']);
+    _video = snapshotData['video'] as String?;
+    _hearts = getDataList(snapshotData['hearts']);
+    _sad = getDataList(snapshotData['sad']);
+    _location = LocationStruct.maybeFromMap(snapshotData['location']);
+    _postTags = getDataList(snapshotData['postTags']);
+    _emoji = snapshotData['emoji'] as bool?;
+    _audio = snapshotData['audio'] as String?;
+    _type = snapshotData['type'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('userspost');
 
-  static Stream<UserspostRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<UserspostRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => UserspostRecord.fromSnapshot(s));
 
-  static Future<UserspostRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<UserspostRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => UserspostRecord.fromSnapshot(s));
 
-  UserspostRecord._();
-  factory UserspostRecord([void Function(UserspostRecordBuilder) updates]) =
-      _$UserspostRecord;
+  static UserspostRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      UserspostRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static UserspostRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      UserspostRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'UserspostRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createUserspostRecordData({
@@ -99,28 +157,19 @@ Map<String, dynamic> createUserspostRecordData({
   String? audio,
   String? type,
 }) {
-  final firestoreData = serializers.toFirestore(
-    UserspostRecord.serializer,
-    UserspostRecord(
-      (u) => u
-        ..content = content
-        ..userref = userref
-        ..timeanddate = timeanddate
-        ..tag = tag
-        ..smileys = null
-        ..angry = null
-        ..reactionbutton = reactionbutton
-        ..savedby = null
-        ..photos = null
-        ..video = video
-        ..hearts = null
-        ..sad = null
-        ..location = LocationStructBuilder()
-        ..postTags = null
-        ..emoji = emoji
-        ..audio = audio
-        ..type = type,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'content': content,
+      'userref': userref,
+      'timeanddate': timeanddate,
+      'tag': tag,
+      'reactionbutton': reactionbutton,
+      'video': video,
+      'location': LocationStruct().toMap(),
+      'emoji': emoji,
+      'audio': audio,
+      'type': type,
+    }.withoutNulls,
   );
 
   // Handle nested data for "location" field.

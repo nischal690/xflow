@@ -78,6 +78,7 @@ class _VerfyingastravellersWidgetState
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -769,9 +770,8 @@ class _VerfyingastravellersWidgetState
                                                         .dropDownValueController1 ??=
                                                     FormFieldController<String>(
                                                         null),
-                                                options: functions
-                                                    .getCountryList()
-                                                    .toList(),
+                                                options:
+                                                    functions.getCountryList(),
                                                 onChanged: (val) async {
                                                   setState(() => _model
                                                       .dropDownValue1 = val);
@@ -911,8 +911,7 @@ class _VerfyingastravellersWidgetState
                                                           .dropDownValueController2 ??=
                                                       FormFieldController<
                                                           String>(null),
-                                                  options:
-                                                      _model.cities.toList(),
+                                                  options: _model.cities,
                                                   onChanged: (val) async {
                                                     setState(() => _model
                                                         .dropDownValue2 = val);

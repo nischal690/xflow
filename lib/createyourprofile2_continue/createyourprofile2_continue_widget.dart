@@ -91,6 +91,7 @@ class _Createyourprofile2ContinueWidgetState
                 key: scaffoldKey,
                 backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
                 body: SafeArea(
+                  top: true,
                   child: Stack(
                     children: [
                       Align(

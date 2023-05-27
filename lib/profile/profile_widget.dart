@@ -148,6 +148,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -231,7 +232,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 5.0),
                                   child: Text(
-                                    productPageUsersRecord.displayName!,
+                                    productPageUsersRecord.displayName,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -264,7 +265,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       ),
                                       Text(
                                         productPageUsersRecord
-                                            .residentialLocation.country!,
+                                            .residentialLocation.country,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium,
                                       ),
@@ -286,7 +287,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       AuthUserStreamWidget(
                                         builder: (context) => Text(
                                           currentUserDocument!
-                                              .residentialLocation.country!,
+                                              .residentialLocation.country,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
@@ -475,7 +476,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                               ),
                                             ),
                                             child: Text(
-                                              wrapInterestRecord.interestname!,
+                                              wrapInterestRecord.interestname,
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)

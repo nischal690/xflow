@@ -57,6 +57,7 @@ class _Landingscreen2WidgetState extends State<Landingscreen2Widget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -129,18 +130,34 @@ class _Landingscreen2WidgetState extends State<Landingscreen2Widget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   20.0, 0.0, 20.0, 12.0),
-                                          child: Text(
-                                            'Travel Anywhere, Like a Local',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: Colors.black,
-                                                  fontSize: 28.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  lineHeight: 1.2,
-                                                ),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              logFirebaseEvent(
+                                                  'LANDINGSCREEN2_PAGE_Text_le9250t6_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Text_navigate_to');
+
+                                              context.pushNamed('fddvm');
+                                            },
+                                            child: Text(
+                                              'Travel Anywhere, Like a Local',
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color: Colors.black,
+                                                        fontSize: 28.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        lineHeight: 1.2,
+                                                      ),
+                                            ),
                                           ),
                                         ),
                                         Padding(

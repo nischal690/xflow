@@ -137,6 +137,7 @@ class _AiChatWidgetState extends State<AiChatWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

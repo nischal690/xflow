@@ -77,6 +77,7 @@ class _Createyourprofile3WidgetState extends State<Createyourprofile3Widget> {
                 key: scaffoldKey,
                 backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
                 body: SafeArea(
+                  top: true,
                   child: Stack(
                     children: [
                       Align(
@@ -656,7 +657,7 @@ class _Createyourprofile3WidgetState extends State<Createyourprofile3Widget> {
                                                                                 3.0),
                                                                             child:
                                                                                 Text(
-                                                                              wrapInterestRecord.interestname!,
+                                                                              wrapInterestRecord.interestname,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Nunito',
                                                                                     color: Color(0xFF333333),

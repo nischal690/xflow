@@ -64,6 +64,135 @@ class SendFullPromptCall {
 
 /// End OpenAI ChatGPT Group Code
 
+/// Start paypal Group Code
+
+class PaypalGroup {
+  static String baseUrl = 'https://api-m.sandbox.paypal.com';
+  static Map<String, String> headers = {};
+  static GenerateAccessTokenCall generateAccessTokenCall =
+      GenerateAccessTokenCall();
+  static PaymentsCall paymentsCall = PaymentsCall();
+}
+
+class GenerateAccessTokenCall {
+  Future<ApiCallResponse> call() {
+    return ApiManager.instance.makeApiCall(
+      callName: 'generate access token',
+      apiUrl: '${PaypalGroup.baseUrl}/v1/oauth2/token',
+      callType: ApiCallType.POST,
+      headers: {
+        ...PaypalGroup.headers,
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization':
+            'Basic QWJOaWRiYUJxaHNOOG1rNmY3cWxlSHhWYTVtUDc4ZUhLMkJ3dU5id3MtVHRxaVQtdFFOd1FHWWhLcFhjVWdZNFZwU1lKdTlFT0tYdUdSZjkwOkVMd2Z6UGpoaktnTng0My16TnVNOVlfT200Mmt3WWVsei1nSUozN3liOS1JZ0EtLV9vbzZqSnlmTzQ2MXhZSzhtYWM1NzRyeEhUMkhWZXc=',
+      },
+      params: {
+        'grant_type': "client_credentials",
+      },
+      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+class PaymentsCall {
+  Future<ApiCallResponse> call({
+    String? accesstoken =
+        'A21AAKAE51mvuBW67CaYhooul56kQC4kcsi5xUxs1m4uCSGIXokQXxfFIswb7NZlQrt9-BOvzEf5AnWaIpPtLq701v4eAbaJg',
+  }) {
+    final body = '''
+{
+  "intent": "sale",
+  "payer": {
+    "payment_method": "paypal"
+  },
+  "transactions": [
+    {
+      "amount": {
+        "total": "30.11",
+        "currency": "USD",
+        "details": {
+          "subtotal": "30.00",
+          "tax": "0.07",
+          "shipping": "0.03",
+          "handling_fee": "1.00",
+          "shipping_discount": "-1.00",
+          "insurance": "0.01"
+        }
+      },
+      "description": "The payment transaction description.",
+      "custom": "EBAY_EMS_90048630024435",
+      "invoice_number": "48787589673",
+      "payment_options": {
+        "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+      },
+      "soft_descriptor": "ECHI5786786",
+      "item_list": {
+        "items": [
+          {
+            "name": "hat",
+            "description": "Brown hat.",
+            "quantity": "5",
+            "price": "3",
+            "tax": "0.01",
+            "sku": "1",
+            "currency": "USD"
+          },
+          {
+            "name": "handbag",
+            "description": "Black handbag.",
+            "quantity": "1",
+            "price": "15",
+            "tax": "0.02",
+            "sku": "product34",
+            "currency": "USD"
+          }
+        ],
+        "shipping_address": {
+          "recipient_name": "Brian Robinson",
+          "line1": "4th Floor",
+          "line2": "Unit #34",
+          "city": "San Jose",
+          "country_code": "US",
+          "postal_code": "95131",
+          "phone": "011862212345678",
+          "state": "CA"
+        }
+      }
+    }
+  ],
+  "note_to_payer": "Contact us for any questions on your order.",
+  "redirect_urls": {
+    "return_url": "https://example.com/return",
+    "cancel_url": "https://example.com/cancel"
+  }
+}' ''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'payments',
+      apiUrl: '${PaypalGroup.baseUrl}/v1/payments/payment',
+      callType: ApiCallType.POST,
+      headers: {
+        ...PaypalGroup.headers,
+        'Content-type': 'application/json',
+        'Authorization':
+            'Bearer A21AAKAE51mvuBW67CaYhooul56kQC4kcsi5xUxs1m4uCSGIXokQXxfFIswb7NZlQrt9-BOvzEf5AnWaIpPtLq701v4eAbaJg',
+      },
+      params: {},
+      body: body,
+      bodyType: BodyType.TEXT,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+}
+
+/// End paypal Group Code
+
 class CurrencyconverterCall {
   static Future<ApiCallResponse> call({
     String? to = '',

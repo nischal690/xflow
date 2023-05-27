@@ -24,6 +24,7 @@ void main() async {
   await initFirebase();
 
   final appState = FFAppState(); // Initialize FFAppState
+  await appState.initializePersistedState();
 
   await initializeStripe();
   if (!kIsWeb) {

@@ -1,7 +1,9 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +61,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
                 child: AutoSizeText(
-                  'Welcome back!\n\n Our Global Payment feature is currently in high demand, so while you wait for it to become available to you, please complete your KYC information. In the meantime, our community feature is a great way to connect with other travelers and share experiences. Plus, using it more often will unlock rewards for you!\n\nThanks for being a part of our community. Let us know if you have any questions or feedback.',
+                  '👋 Welcome back!\n\n🌍 Our Global Payment feature is currently in high demand, and we don\'t want you to miss out! Join our payment waitlist to get onboarded quickly and enjoy seamless global transactions. In the meantime, our 🤝 community feature is a great way to connect with other travelers and share experiences. Plus, using it more often will unlock 🎁 rewards for you!\n\nThanks for being a part of our community. Let us know if you have any questions or feedback. 😊',
                   textAlign: TextAlign.start,
                   style: FlutterFlowTheme.of(context).bodyMedium,
                 ),
@@ -78,7 +80,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
-                    context.goNamedAuth('landingscreen2', mounted);
+                    context.goNamedAuth('landingscreen2', context.mounted);
                   },
                   child: Container(
                     width: double.infinity,
@@ -94,21 +96,62 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Questionnaire\n',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: Color(0xFFE2F692),
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                          if (!valueOrDefault<bool>(
+                              currentUserDocument?.waitlistjoined, false))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 0.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'PAYMENT_COMP_Text_4v0sl3ta_ON_TAP');
+                                    logFirebaseEvent('Text_backend_call');
+
+                                    final usersUpdateData =
+                                        createUsersRecordData(
+                                      waitlistjoined: true,
+                                    );
+                                    await currentUserReference!
+                                        .update(usersUpdateData);
+                                  },
+                                  child: Text(
+                                    'Join Waitlist',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: Color(0xFFE2F692),
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
+                                ),
+                              ),
                             ),
-                          ),
+                          if (valueOrDefault<bool>(
+                              currentUserDocument?.waitlistjoined, false))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 0.0, 0.0),
+                              child: AuthUserStreamWidget(
+                                builder: (context) => Text(
+                                  'Waitlist joined',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: Color(0xFFE2F692),
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),

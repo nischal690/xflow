@@ -61,6 +61,7 @@ class _Createyourprofile4WidgetState extends State<Createyourprofile4Widget> {
             resizeToAvoidBottomInset: false,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

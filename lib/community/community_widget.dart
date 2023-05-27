@@ -268,7 +268,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                         context.pushNamed('Setting');
                       },
                       child: Icon(
-                        FFIcons.knotificationBing,
+                        Icons.settings,
                         color: Color(0xFF101213),
                         size: 24.0,
                       ),
@@ -281,6 +281,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 alignment: AlignmentDirectional(1.0, 0.7),
                 children: [

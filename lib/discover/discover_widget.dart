@@ -172,6 +172,7 @@ class _DiscoverWidgetState extends State<DiscoverWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 alignment: AlignmentDirectional(1.0, 0.7),
                 children: [

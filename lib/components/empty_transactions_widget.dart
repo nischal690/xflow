@@ -3,18 +3,19 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'emptycolumn_model.dart';
-export 'emptycolumn_model.dart';
+import 'empty_transactions_model.dart';
+export 'empty_transactions_model.dart';
 
-class EmptycolumnWidget extends StatefulWidget {
-  const EmptycolumnWidget({Key? key}) : super(key: key);
+class EmptyTransactionsWidget extends StatefulWidget {
+  const EmptyTransactionsWidget({Key? key}) : super(key: key);
 
   @override
-  _EmptycolumnWidgetState createState() => _EmptycolumnWidgetState();
+  _EmptyTransactionsWidgetState createState() =>
+      _EmptyTransactionsWidgetState();
 }
 
-class _EmptycolumnWidgetState extends State<EmptycolumnWidget> {
-  late EmptycolumnModel _model;
+class _EmptyTransactionsWidgetState extends State<EmptyTransactionsWidget> {
+  late EmptyTransactionsModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -25,7 +26,7 @@ class _EmptycolumnWidgetState extends State<EmptycolumnWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EmptycolumnModel());
+    _model = createModel(context, () => EmptyTransactionsModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

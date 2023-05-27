@@ -125,7 +125,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(48.0),
                                 child: Image.network(
-                                  rowUsersRecord.photoUrl!,
+                                  rowUsersRecord.photoUrl,
                                   width: 48.0,
                                   height: 48.0,
                                   fit: BoxFit.cover,
@@ -139,7 +139,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      rowUsersRecord.displayName!,
+                                      rowUsersRecord.displayName,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -606,7 +606,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               5.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            containerUserspostRecord.location.address!,
+                            containerUserspostRecord.location.address,
                             style: FlutterFlowTheme.of(context).bodyMedium,
                           ),
                         ),
@@ -616,7 +616,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
                     child: Text(
-                      containerUserspostRecord.content!,
+                      containerUserspostRecord.content,
                       style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
@@ -628,7 +628,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                         child: custom_widgets.ImageCarousel(
                           width: double.infinity,
                           height: 350.0,
-                          imgList: containerUserspostRecord.photos!.toList(),
+                          imgList: containerUserspostRecord.photos,
                         ),
                       ),
                     ],
@@ -636,7 +636,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: FlutterFlowVideoPlayer(
-                      path: containerUserspostRecord.video!,
+                      path: containerUserspostRecord.video,
                       videoType: VideoType.network,
                       autoPlay: false,
                       looping: false,
@@ -747,18 +747,12 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                 Text(
                                   functions
                                       .countlikes(
-                                          containerUserspostRecord.hearts!
-                                              .toList()
-                                              .length,
-                                          containerUserspostRecord.smileys!
-                                              .toList()
-                                              .length,
-                                          containerUserspostRecord.sad!
-                                              .toList()
-                                              .length,
-                                          containerUserspostRecord.angry!
-                                              .toList()
-                                              .length)
+                                          containerUserspostRecord
+                                              .hearts.length,
+                                          containerUserspostRecord
+                                              .smileys.length,
+                                          containerUserspostRecord.sad.length,
+                                          containerUserspostRecord.angry.length)
                                       .toString(),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -905,8 +899,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                     },
                                     child: Stack(
                                       children: [
-                                        if (containerUserspostRecord.hearts!
-                                            .toList()
+                                        if (containerUserspostRecord.hearts
                                             .contains(currentUserReference))
                                           Align(
                                             alignment:
@@ -924,8 +917,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                               ),
                                             ),
                                           ),
-                                        if (containerUserspostRecord.sad!
-                                            .toList()
+                                        if (containerUserspostRecord.sad
                                             .contains(currentUserReference))
                                           Container(
                                             width: 30.0,
@@ -939,8 +931,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                               fit: BoxFit.contain,
                                             ),
                                           ),
-                                        if (containerUserspostRecord.angry!
-                                            .toList()
+                                        if (containerUserspostRecord.angry
                                             .contains(currentUserReference))
                                           Container(
                                             width: 30.0,
@@ -954,8 +945,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                               fit: BoxFit.contain,
                                             ),
                                           ),
-                                        if (containerUserspostRecord.smileys!
-                                            .toList()
+                                        if (containerUserspostRecord.smileys
                                             .contains(currentUserReference))
                                           Container(
                                             width: 30.0,
@@ -980,10 +970,32 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         20.0, 0.0, 0.0, 0.0),
-                                    child: Icon(
-                                      FFIcons.kmessage,
-                                      color: Color(0xFF858282),
-                                      size: 24.0,
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        logFirebaseEvent(
+                                            'USERPOST_COMP_Icon_7vt8nrsm_ON_TAP');
+                                        logFirebaseEvent('Icon_navigate_to');
+
+                                        context.pushNamed(
+                                          'Postdetails',
+                                          queryParams: {
+                                            'userpostref': serializeParam(
+                                              containerUserspostRecord
+                                                  .reference,
+                                              ParamType.DocumentReference,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      },
+                                      child: Icon(
+                                        FFIcons.kmessage,
+                                        color: Color(0xFF858282),
+                                        size: 24.0,
+                                      ),
                                     ),
                                   ),
                                   Padding(
@@ -1000,16 +1012,74 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Icon(
-                                    FFIcons.ksave2,
-                                    color: Color(0xFF858282),
-                                    size: 24.0,
-                                  ),
+                                  if ((currentUserDocument?.savedPosts
+                                              ?.toList() ??
+                                          [])
+                                      .contains(currentUserReference))
+                                    AuthUserStreamWidget(
+                                      builder: (context) => InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'USERPOST_COMP_Icon_z3iyxyuy_ON_TAP');
+                                          logFirebaseEvent('Icon_backend_call');
+
+                                          final usersUpdateData = {
+                                            'savedPosts':
+                                                FieldValue.arrayUnion([
+                                              containerUserspostRecord.reference
+                                            ]),
+                                          };
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                        child: Icon(
+                                          FFIcons.ksave2,
+                                          color: Color(0xFF858282),
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                    ),
+                                  if ((currentUserDocument?.savedPosts
+                                              ?.toList() ??
+                                          [])
+                                      .contains(currentUserReference))
+                                    AuthUserStreamWidget(
+                                      builder: (context) => InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'USERPOST_COMP_Icon_11jd9ftu_ON_TAP');
+                                          logFirebaseEvent('Icon_backend_call');
+
+                                          final usersUpdateData = {
+                                            'savedPosts':
+                                                FieldValue.arrayRemove([
+                                              containerUserspostRecord.reference
+                                            ]),
+                                          };
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                        child: Icon(
+                                          FFIcons.ksave2,
+                                          color: FlutterFlowTheme.of(context)
+                                              .success,
+                                          size: 24.0,
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ],
                           ),
-                          if (containerUserspostRecord.emoji ?? true)
+                          if (containerUserspostRecord.emoji)
                             Align(
                               alignment: AlignmentDirectional(-0.5, 0.1),
                               child: Container(

@@ -113,8 +113,8 @@ class ParameterData {
 final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
   'History': ParameterData.none(),
-  'Paybyphone': ParameterData.none(),
   'Notification': ParameterData.none(),
+  'Paybyphone': ParameterData.none(),
   'Wallet': ParameterData.none(),
   'fdgdfgs': ParameterData.none(),
   'Receiverprofile': (data) async => ParameterData(
@@ -126,17 +126,17 @@ final parametersBuilderMap =
   'Setting': ParameterData.none(),
   'Transact': ParameterData.none(),
   'OTPverificationlogin': ParameterData.none(),
-  'HomePage': ParameterData.none(),
   'Register': ParameterData.none(),
+  'HomePage': ParameterData.none(),
   'landingscreen2': ParameterData.none(),
   'OTPverification': ParameterData.none(),
   'createyourprofile2': ParameterData.none(),
   'login': ParameterData.none(),
   'createyourprofile2Continue': ParameterData.none(),
   'createyourprofile4': ParameterData.none(),
-  'createyourprofile': ParameterData.none(),
   'createyourprofile3': ParameterData.none(),
   'CountrySelector': ParameterData.none(),
+  'createyourprofile': ParameterData.none(),
   'Discover': ParameterData.none(),
   'Community': ParameterData.none(),
   'addPost': (data) async => ParameterData(
@@ -152,7 +152,21 @@ final parametersBuilderMap =
         },
       ),
   'aiChat': ParameterData.none(),
+  'Postdetails': (data) async => ParameterData(
+        allParams: {
+          'userpostref': getParameter<DocumentReference>(data, 'userpostref'),
+        },
+      ),
   'verfyingastravellers': ParameterData.none(),
+  'editProfile': ParameterData.none(),
+  'fddvm': (data) async => ParameterData(
+        allParams: {
+          'currency': getParameter<String>(data, 'currency'),
+          'currencyname': getParameter<String>(data, 'currencyname'),
+        },
+      ),
+  'WalletCopy': ParameterData.none(),
+  'fddvmCopy': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

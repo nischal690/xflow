@@ -31,6 +31,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Register'});
     _model.textController ??= TextEditingController();
+    authManager.handlePhoneAuthStateChanges(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -55,6 +56,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -498,10 +500,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                               await authManager.beginPhoneAuth(
                                                 context: context,
                                                 phoneNumber: phoneNumberVal,
-                                                onCodeSent: () async {
+                                                onCodeSent: (context) async {
                                                   context.goNamedAuth(
                                                     'OTPverification',
-                                                    mounted,
+                                                    context.mounted,
                                                     ignoreRedirect: true,
                                                   );
                                                 },

@@ -20,6 +20,8 @@ import 'dart:math' as math;
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 
+import '/flutter_flow/flutter_flow_util.dart' show routeObserver;
+
 export 'package:assets_audio_player/assets_audio_player.dart';
 
 class FlutterFlowAudioPlayer extends StatefulWidget {
@@ -31,6 +33,7 @@ class FlutterFlowAudioPlayer extends StatefulWidget {
     required this.playbackButtonColor,
     required this.activeTrackColor,
     required this.elevation,
+    this.pauseOnNavigate = true,
   });
 
   final Audio audio;
@@ -40,12 +43,14 @@ class FlutterFlowAudioPlayer extends StatefulWidget {
   final Color playbackButtonColor;
   final Color activeTrackColor;
   final double elevation;
+  final bool pauseOnNavigate;
 
   @override
   _FlutterFlowAudioPlayerState createState() => _FlutterFlowAudioPlayerState();
 }
 
-class _FlutterFlowAudioPlayerState extends State<FlutterFlowAudioPlayer> {
+class _FlutterFlowAudioPlayerState extends State<FlutterFlowAudioPlayer>
+    with RouteAware {
   AssetsAudioPlayer? _assetsAudioPlayer;
 
   @override
@@ -82,6 +87,21 @@ class _FlutterFlowAudioPlayerState extends State<FlutterFlowAudioPlayer> {
     final isPlaying = _assetsAudioPlayer?.isPlaying.value ?? false;
     if (changed && !isPlaying) {
       openPlayer();
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.pauseOnNavigate) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    }
+  }
+
+  @override
+  void didPushNext() {
+    if (widget.pauseOnNavigate) {
+      _assetsAudioPlayer?.pause();
     }
   }
 

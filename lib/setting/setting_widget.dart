@@ -127,6 +127,7 @@ class _SettingWidgetState extends State<SettingWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -516,7 +517,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                                                       .fromSTEB(
                                                           16.0, 0.0, 0.0, 0.0),
                                                   child: Text(
-                                                    'Support care',
+                                                    'Support ',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -888,7 +889,8 @@ class _SettingWidgetState extends State<SettingWidget> {
                                                 .clearRedirectLocation();
 
                                             context.goNamedAuth(
-                                                'landingscreen2', mounted);
+                                                'landingscreen2',
+                                                context.mounted);
                                           },
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,

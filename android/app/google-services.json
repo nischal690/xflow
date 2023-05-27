@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "772665708682-ec1t9kbe6pgb4ronqclm0scf5po2mr50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.xflowapp",
+            "certificate_hash": "2ecd737341bf867a523fe1329ce509fb9a260d8d"
+          }
+        },
+        {
           "client_id": "772665708682-egkdrt67djk065etaq6o6qdecoggvgat.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

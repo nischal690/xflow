@@ -123,6 +123,7 @@ class _CountrySelectorWidgetState extends State<CountrySelectorWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
-import '../backend/backend.dart';
+import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../auth/firebase_auth/auth_util.dart';
+import '/backend/schema/structs/index.dart';
+import '/auth/firebase_auth/auth_util.dart';
 
 List<String> getCountryList() {
   final countries = [
@@ -945,4 +946,86 @@ dynamic saveChatHistory(
   } else {
     return [newChat];
   }
+}
+
+List<String> currenciessupported() {
+  {
+    Map<String, String> currencies = {
+      'Australian dollar': 'AUD',
+      'Brazilian real': 'BRL',
+      'Canadian dollar': 'CAD',
+      'Chinese Renminbi': 'CNY',
+      'Czech koruna': 'CZK',
+      'Danish krone': 'DKK',
+      'Euro': 'EUR',
+      'Hong Kong dollar': 'HKD',
+      'Hungarian forint': 'HUF',
+      'Israeli new shekel': 'ILS',
+      'Japanese yen': 'JPY',
+      'Malaysian ringgit': 'MYR',
+      'Mexican peso': 'MXN',
+      'New Taiwan dollar': 'TWD',
+      'New Zealand dollar': 'NZD',
+      'Norwegian krone': 'NOK',
+      'Philippine peso': 'PHP',
+      'Polish złoty': 'PLN',
+      'Pound sterling': 'GBP',
+      'Russian ruble': 'RUB',
+      'Singapore dollar': 'SGD',
+      'Swedish krona': 'SEK',
+      'Swiss franc': 'CHF',
+      'Thai baht': 'THB',
+      'United States dollar': 'USD',
+    };
+
+    List<String> currencyAbbreviations = currencies.values.toList();
+
+    // Example usage:
+    return currencyAbbreviations;
+  }
+}
+
+String returncurrencyfullname(String currencycode) {
+  Map<String, String> currencies = {
+    'Australian dollar': 'AUD',
+    'Brazilian real': 'BRL',
+    'Canadian dollar': 'CAD',
+    'Chinese Renminbi': 'CNY',
+    'Czech koruna': 'CZK',
+    'Danish krone': 'DKK',
+    'Euro': 'EUR',
+    'Hong Kong dollar': 'HKD',
+    'Hungarian forint': 'HUF',
+    'Israeli new shekel': 'ILS',
+    'Japanese yen': 'JPY',
+    'Malaysian ringgit': 'MYR',
+    'Mexican peso': 'MXN',
+    'New Taiwan dollar': 'TWD',
+    'New Zealand dollar': 'NZD',
+    'Norwegian krone': 'NOK',
+    'Philippine peso': 'PHP',
+    'Polish złoty': 'PLN',
+    'Pound sterling': 'GBP',
+    'Russian ruble': 'RUB',
+    'Singapore dollar': 'SGD',
+    'Swedish krona': 'SEK',
+    'Swiss franc': 'CHF',
+    'Thai baht': 'THB',
+    'United States dollar': 'USD',
+  };
+
+  String findKey(String value) {
+    for (var entry in currencies.entries) {
+      if (entry.value == value) {
+        return entry.key;
+      }
+    }
+    return "null";
+  }
+
+  String currency = findKey(currencycode);
+
+  return "Amount (in " + currency + " )";
+
+  // Example usage:
 }

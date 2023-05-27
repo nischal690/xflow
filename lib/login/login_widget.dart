@@ -69,6 +69,8 @@ class _LoginWidgetState extends State<LoginWidget> {
     });
 
     _model.textController ??= TextEditingController();
+    authManager.handlePhoneAuthStateChanges(context);
+    authManager.handlePhoneAuthStateChanges(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -93,6 +95,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -435,10 +438,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             await authManager.beginPhoneAuth(
                                               context: context,
                                               phoneNumber: phoneNumberVal,
-                                              onCodeSent: () async {
+                                              onCodeSent: (context) async {
                                                 context.goNamedAuth(
                                                   'OTPverificationlogin',
-                                                  mounted,
+                                                  context.mounted,
                                                   ignoreRedirect: true,
                                                 );
                                               },
@@ -518,10 +521,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       .beginPhoneAuth(
                                                     context: context,
                                                     phoneNumber: phoneNumberVal,
-                                                    onCodeSent: () async {
+                                                    onCodeSent:
+                                                        (context) async {
                                                       context.goNamedAuth(
                                                         'OTPverificationlogin',
-                                                        mounted,
+                                                        context.mounted,
                                                         ignoreRedirect: true,
                                                       );
                                                     },

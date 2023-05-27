@@ -55,6 +55,7 @@ class _Createyourprofile2WidgetState extends State<Createyourprofile2Widget> {
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(

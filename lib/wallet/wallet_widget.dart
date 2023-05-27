@@ -1,15 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/backend/backend.dart';
-import '/backend/stripe/payment_manager.dart';
+import '/components/payment_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shake/shake.dart';
 import 'wallet_model.dart';
 export 'wallet_model.dart';
 
@@ -24,6 +23,8 @@ class _WalletWidgetState extends State<WalletWidget> {
   late WalletModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  late ShakeDetector shakeDetector;
+  var shakeActionInProgress = false;
   final _unfocusNode = FocusNode();
 
   @override
@@ -32,16 +33,37 @@ class _WalletWidgetState extends State<WalletWidget> {
     _model = createModel(context, () => WalletModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Wallet'});
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('WALLET_PAGE_Wallet_ON_INIT_STATE');
-      logFirebaseEvent('Wallet_backend_call');
-
-      final usersUpdateData = {
-        'logincount': FieldValue.increment(1),
-      };
-      await currentUserReference!.update(usersUpdateData);
-    });
+    // On shake action.
+    shakeDetector = ShakeDetector.autoStart(
+      onPhoneShake: () async {
+        if (shakeActionInProgress) {
+          return;
+        }
+        shakeActionInProgress = true;
+        try {
+          logFirebaseEvent('WALLET_PAGE_Wallet_ON_PHONE_SHAKE');
+          logFirebaseEvent('Wallet_bottom_sheet');
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            isDismissible: false,
+            context: context,
+            builder: (bottomSheetContext) {
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                child: Padding(
+                  padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                  child: PaymentWidget(),
+                ),
+              );
+            },
+          ).then((value) => setState(() {}));
+        } finally {
+          shakeActionInProgress = false;
+        }
+      },
+      shakeThresholdGravity: 1.5,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -50,6 +72,7 @@ class _WalletWidgetState extends State<WalletWidget> {
   void dispose() {
     _model.dispose();
 
+    shakeDetector.stopListening();
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -94,7 +117,7 @@ class _WalletWidgetState extends State<WalletWidget> {
                     ),
                   ),
                   Text(
-                    'Receiver profile ',
+                    'Wallet',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Nunito',
                           color: Colors.black,
@@ -130,6 +153,7 @@ class _WalletWidgetState extends State<WalletWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -387,36 +411,9 @@ class _WalletWidgetState extends State<WalletWidget> {
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'WALLET_PAGE_Row_y55ttf8s_ON_TAP');
-                                            logFirebaseEvent(
-                                                'Row_stripe_payment');
-                                            final paymentResponse =
-                                                await processStripePayment(
-                                              context,
-                                              amount: 50,
-                                              currency: 'USD',
-                                              customerEmail: currentUserEmail,
-                                              customerName: 'Nischal Nayak',
-                                              description: 'Wallet',
-                                              allowGooglePay: true,
-                                              allowApplePay: false,
-                                              themeStyle: ThemeMode.system,
-                                            );
-                                            if (paymentResponse.paymentId ==
-                                                null) {
-                                              if (paymentResponse
-                                                      .errorMessage !=
-                                                  null) {
-                                                showSnackbar(
-                                                  context,
-                                                  'Error: ${paymentResponse.errorMessage}',
-                                                );
-                                              }
-                                              return;
-                                            }
-                                            _model.paymentId =
-                                                paymentResponse.paymentId!;
+                                            logFirebaseEvent('Row_navigate_to');
 
-                                            setState(() {});
+                                            context.pushNamed('WalletCopy');
                                           },
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,

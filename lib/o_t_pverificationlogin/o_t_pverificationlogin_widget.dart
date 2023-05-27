@@ -1,12 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,16 +38,11 @@ class _OTPverificationloginWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('O_T_PVERIFICATIONLOGIN_OTPverificationlo');
-      logFirebaseEvent('OTPverificationlogin_backend_call');
-
-      final usersUpdateData = {
-        'logincount': FieldValue.increment(1),
-      };
-      await currentUserReference!.update(usersUpdateData);
       logFirebaseEvent('OTPverificationlogin_timer');
       _model.timerController.onExecute.add(StopWatchExecute.start);
     });
 
+    authManager.handlePhoneAuthStateChanges(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -98,6 +91,7 @@ class _OTPverificationloginWidgetState
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -234,84 +228,93 @@ class _OTPverificationloginWidgetState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 10.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Verification Code ',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: Colors.black,
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                            ),
-                                            if (_model.timerMilliseconds == 0)
-                                              InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'O_T_PVERIFICATIONLOGIN_Resend_ON_TAP');
-                                                  logFirebaseEvent(
-                                                      'Resend_auth');
-                                                  final phoneNumberVal =
-                                                      FFAppState().phonenumber;
-                                                  if (phoneNumberVal == null ||
-                                                      phoneNumberVal.isEmpty ||
-                                                      !phoneNumberVal
-                                                          .startsWith('+')) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            'Phone Number is required and has to start with +.'),
-                                                      ),
-                                                    );
-                                                    return;
-                                                  }
-                                                  await authManager
-                                                      .beginPhoneAuth(
-                                                    context: context,
-                                                    phoneNumber: phoneNumberVal,
-                                                    onCodeSent: () async {
-                                                      context.goNamedAuth(
-                                                        'OTPverificationlogin',
-                                                        mounted,
-                                                        ignoreRedirect: true,
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Text(
-                                                  'Resend',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            Color(0xFF0094D4),
-                                                        fontSize: 12.0,
-                                                      ),
-                                                ),
+                                      if (_model.timerMilliseconds == 0)
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 10.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Verification Code ',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: Colors.black,
+                                                          fontSize: 12.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                               ),
-                                          ],
+                                              if (_model.timerMilliseconds == 0)
+                                                InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'O_T_PVERIFICATIONLOGIN_Resend_ON_TAP');
+                                                    logFirebaseEvent(
+                                                        'Resend_auth');
+                                                    final phoneNumberVal =
+                                                        FFAppState()
+                                                            .phonenumber;
+                                                    if (phoneNumberVal == null ||
+                                                        phoneNumberVal
+                                                            .isEmpty ||
+                                                        !phoneNumberVal
+                                                            .startsWith('+')) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                              'Phone Number is required and has to start with +.'),
+                                                        ),
+                                                      );
+                                                      return;
+                                                    }
+                                                    await authManager
+                                                        .beginPhoneAuth(
+                                                      context: context,
+                                                      phoneNumber:
+                                                          phoneNumberVal,
+                                                      onCodeSent:
+                                                          (context) async {
+                                                        context.goNamedAuth(
+                                                          'OTPverificationlogin',
+                                                          context.mounted,
+                                                          ignoreRedirect: true,
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Resend',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodySmall
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color:
+                                                              Color(0xFF0094D4),
+                                                          fontSize: 12.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
                                       PinCodeTextField(
                                         autoDisposeControllers: false,
                                         appContext: context,
@@ -466,7 +469,8 @@ class _OTPverificationloginWidgetState
 
                                 logFirebaseEvent('Container_navigate_to');
 
-                                context.pushNamedAuth('HomePage', mounted);
+                                context.pushNamedAuth(
+                                    'HomePage', context.mounted);
                               },
                               child: Container(
                                 width: double.infinity,

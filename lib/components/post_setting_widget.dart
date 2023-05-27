@@ -116,8 +116,7 @@ class _PostSettingWidgetState extends State<PostSettingWidget> {
                           return Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              if (!rowUsersRecord.followers!
-                                  .toList()
+                              if (!rowUsersRecord.followers
                                   .contains(currentUserReference))
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -168,8 +167,7 @@ class _PostSettingWidgetState extends State<PostSettingWidget> {
                                     ),
                                   ],
                                 ),
-                              if (rowUsersRecord.followers!
-                                  .toList()
+                              if (rowUsersRecord.followers
                                   .contains(currentUserReference))
                                 Row(
                                   mainAxisSize: MainAxisSize.max,

@@ -146,6 +146,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -514,7 +515,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                                               audio: Audio.network(
                                                 FFAppState().audio,
                                                 metas: Metas(
-                                                  id: 'sample3.mp3-e6f1bd43',
+                                                  id: 'sample3.mp3-f20b14f4',
                                                 ),
                                               ),
                                               titleTextStyle:
@@ -540,6 +541,7 @@ class _AddPostWidgetState extends State<AddPostWidget> {
                                               activeTrackColor:
                                                   Color(0xFFDAF377),
                                               elevation: 4.0,
+                                              pauseOnNavigate: false,
                                             ),
                                           ),
                                       ],

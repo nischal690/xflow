@@ -1,118 +1,210 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'users_record.g.dart';
+class UsersRecord extends FirestoreRecord {
+  UsersRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
-  static Serializer<UsersRecord> get serializer => _$usersRecordSerializer;
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
 
-  String? get email;
+  // "display_name" field.
+  String? _displayName;
+  String get displayName => _displayName ?? '';
+  bool hasDisplayName() => _displayName != null;
 
-  @BuiltValueField(wireName: 'display_name')
-  String? get displayName;
+  // "photo_url" field.
+  String? _photoUrl;
+  String get photoUrl => _photoUrl ?? '';
+  bool hasPhotoUrl() => _photoUrl != null;
 
-  @BuiltValueField(wireName: 'photo_url')
-  String? get photoUrl;
+  // "created_time" field.
+  DateTime? _createdTime;
+  DateTime? get createdTime => _createdTime;
+  bool hasCreatedTime() => _createdTime != null;
 
-  @BuiltValueField(wireName: 'created_time')
-  DateTime? get createdTime;
+  // "phone_number" field.
+  String? _phoneNumber;
+  String get phoneNumber => _phoneNumber ?? '';
+  bool hasPhoneNumber() => _phoneNumber != null;
 
-  @BuiltValueField(wireName: 'phone_number')
-  String? get phoneNumber;
+  // "logincount" field.
+  int? _logincount;
+  int get logincount => _logincount ?? 0;
+  bool hasLogincount() => _logincount != null;
 
-  int? get logincount;
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
 
-  String? get uid;
+  // "country" field.
+  String? _country;
+  String get country => _country ?? '';
+  bool hasCountry() => _country != null;
 
-  String? get country;
+  // "Currencytype" field.
+  String? _currencytype;
+  String get currencytype => _currencytype ?? '';
+  bool hasCurrencytype() => _currencytype != null;
 
-  @BuiltValueField(wireName: 'Currencytype')
-  String? get currencytype;
+  // "amount_in_wallet" field.
+  int? _amountInWallet;
+  int get amountInWallet => _amountInWallet ?? 0;
+  bool hasAmountInWallet() => _amountInWallet != null;
 
-  @BuiltValueField(wireName: 'amount_in_wallet')
-  int? get amountInWallet;
+  // "latlang" field.
+  LatLng? _latlang;
+  LatLng? get latlang => _latlang;
+  bool hasLatlang() => _latlang != null;
 
-  LatLng? get latlang;
+  // "currenciessymbol" field.
+  String? _currenciessymbol;
+  String get currenciessymbol => _currenciessymbol ?? '';
+  bool hasCurrenciessymbol() => _currenciessymbol != null;
 
-  String? get currenciessymbol;
+  // "title" field.
+  String? _title;
+  String get title => _title ?? '';
+  bool hasTitle() => _title != null;
 
-  String? get title;
+  // "DOB" field.
+  DateTime? _dob;
+  DateTime? get dob => _dob;
+  bool hasDob() => _dob != null;
 
-  @BuiltValueField(wireName: 'DOB')
-  DateTime? get dob;
+  // "residentialLocation" field.
+  LocationStruct? _residentialLocation;
+  LocationStruct get residentialLocation =>
+      _residentialLocation ?? LocationStruct();
+  bool hasResidentialLocation() => _residentialLocation != null;
 
-  LocationStruct get residentialLocation;
+  // "posttags" field.
+  List<String>? _posttags;
+  List<String> get posttags => _posttags ?? const [];
+  bool hasPosttags() => _posttags != null;
 
-  BuiltList<String>? get posttags;
+  // "followers" field.
+  List<DocumentReference>? _followers;
+  List<DocumentReference> get followers => _followers ?? const [];
+  bool hasFollowers() => _followers != null;
 
-  BuiltList<DocumentReference>? get followers;
+  // "followings" field.
+  List<DocumentReference>? _followings;
+  List<DocumentReference> get followings => _followings ?? const [];
+  bool hasFollowings() => _followings != null;
 
-  BuiltList<DocumentReference>? get followings;
+  // "currentLocation" field.
+  LocationStruct? _currentLocation;
+  LocationStruct get currentLocation => _currentLocation ?? LocationStruct();
+  bool hasCurrentLocation() => _currentLocation != null;
 
-  LocationStruct get currentLocation;
+  // "guide" field.
+  bool? _guide;
+  bool get guide => _guide ?? false;
+  bool hasGuide() => _guide != null;
 
-  bool? get guide;
+  // "chargefor" field.
+  String? _chargefor;
+  String get chargefor => _chargefor ?? '';
+  bool hasChargefor() => _chargefor != null;
 
-  String? get chargefor;
+  // "chargeamount" field.
+  double? _chargeamount;
+  double get chargeamount => _chargeamount ?? 0.0;
+  bool hasChargeamount() => _chargeamount != null;
 
-  double? get chargeamount;
+  // "guideCities" field.
+  List<String>? _guideCities;
+  List<String> get guideCities => _guideCities ?? const [];
+  bool hasGuideCities() => _guideCities != null;
 
-  BuiltList<String>? get guideCities;
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
 
-  String? get type;
+  // "beento" field.
+  List<String>? _beento;
+  List<String> get beento => _beento ?? const [];
+  bool hasBeento() => _beento != null;
 
-  BuiltList<String>? get beento;
+  // "waitlistjoined" field.
+  bool? _waitlistjoined;
+  bool get waitlistjoined => _waitlistjoined ?? false;
+  bool hasWaitlistjoined() => _waitlistjoined != null;
 
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
+  // "savedPosts" field.
+  List<DocumentReference>? _savedPosts;
+  List<DocumentReference> get savedPosts => _savedPosts ?? const [];
+  bool hasSavedPosts() => _savedPosts != null;
 
-  static void _initializeBuilder(UsersRecordBuilder builder) => builder
-    ..email = ''
-    ..displayName = ''
-    ..photoUrl = ''
-    ..phoneNumber = ''
-    ..logincount = 0
-    ..uid = ''
-    ..country = ''
-    ..currencytype = ''
-    ..amountInWallet = 0
-    ..currenciessymbol = ''
-    ..title = ''
-    ..residentialLocation = LocationStructBuilder()
-    ..posttags = ListBuilder()
-    ..followers = ListBuilder()
-    ..followings = ListBuilder()
-    ..currentLocation = LocationStructBuilder()
-    ..guide = false
-    ..chargefor = ''
-    ..chargeamount = 0.0
-    ..guideCities = ListBuilder()
-    ..type = ''
-    ..beento = ListBuilder();
+  void _initializeFields() {
+    _email = snapshotData['email'] as String?;
+    _displayName = snapshotData['display_name'] as String?;
+    _photoUrl = snapshotData['photo_url'] as String?;
+    _createdTime = snapshotData['created_time'] as DateTime?;
+    _phoneNumber = snapshotData['phone_number'] as String?;
+    _logincount = snapshotData['logincount'] as int?;
+    _uid = snapshotData['uid'] as String?;
+    _country = snapshotData['country'] as String?;
+    _currencytype = snapshotData['Currencytype'] as String?;
+    _amountInWallet = snapshotData['amount_in_wallet'] as int?;
+    _latlang = snapshotData['latlang'] as LatLng?;
+    _currenciessymbol = snapshotData['currenciessymbol'] as String?;
+    _title = snapshotData['title'] as String?;
+    _dob = snapshotData['DOB'] as DateTime?;
+    _residentialLocation =
+        LocationStruct.maybeFromMap(snapshotData['residentialLocation']);
+    _posttags = getDataList(snapshotData['posttags']);
+    _followers = getDataList(snapshotData['followers']);
+    _followings = getDataList(snapshotData['followings']);
+    _currentLocation =
+        LocationStruct.maybeFromMap(snapshotData['currentLocation']);
+    _guide = snapshotData['guide'] as bool?;
+    _chargefor = snapshotData['chargefor'] as String?;
+    _chargeamount = castToType<double>(snapshotData['chargeamount']);
+    _guideCities = getDataList(snapshotData['guideCities']);
+    _type = snapshotData['type'] as String?;
+    _beento = getDataList(snapshotData['beento']);
+    _waitlistjoined = snapshotData['waitlistjoined'] as bool?;
+    _savedPosts = getDataList(snapshotData['savedPosts']);
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
 
-  static Stream<UsersRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<UsersRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => UsersRecord.fromSnapshot(s));
 
-  static Future<UsersRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<UsersRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => UsersRecord.fromSnapshot(s));
 
-  UsersRecord._();
-  factory UsersRecord([void Function(UsersRecordBuilder) updates]) =
-      _$UsersRecord;
+  static UsersRecord fromSnapshot(DocumentSnapshot snapshot) => UsersRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static UsersRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      UsersRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'UsersRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createUsersRecordData({
@@ -136,37 +228,32 @@ Map<String, dynamic> createUsersRecordData({
   String? chargefor,
   double? chargeamount,
   String? type,
+  bool? waitlistjoined,
 }) {
-  final firestoreData = serializers.toFirestore(
-    UsersRecord.serializer,
-    UsersRecord(
-      (u) => u
-        ..email = email
-        ..displayName = displayName
-        ..photoUrl = photoUrl
-        ..createdTime = createdTime
-        ..phoneNumber = phoneNumber
-        ..logincount = logincount
-        ..uid = uid
-        ..country = country
-        ..currencytype = currencytype
-        ..amountInWallet = amountInWallet
-        ..latlang = latlang
-        ..currenciessymbol = currenciessymbol
-        ..title = title
-        ..dob = dob
-        ..residentialLocation = LocationStructBuilder()
-        ..posttags = null
-        ..followers = null
-        ..followings = null
-        ..currentLocation = LocationStructBuilder()
-        ..guide = guide
-        ..chargefor = chargefor
-        ..chargeamount = chargeamount
-        ..guideCities = null
-        ..type = type
-        ..beento = null,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'email': email,
+      'display_name': displayName,
+      'photo_url': photoUrl,
+      'created_time': createdTime,
+      'phone_number': phoneNumber,
+      'logincount': logincount,
+      'uid': uid,
+      'country': country,
+      'Currencytype': currencytype,
+      'amount_in_wallet': amountInWallet,
+      'latlang': latlang,
+      'currenciessymbol': currenciessymbol,
+      'title': title,
+      'DOB': dob,
+      'residentialLocation': LocationStruct().toMap(),
+      'currentLocation': LocationStruct().toMap(),
+      'guide': guide,
+      'chargefor': chargefor,
+      'chargeamount': chargeamount,
+      'type': type,
+      'waitlistjoined': waitlistjoined,
+    }.withoutNulls,
   );
 
   // Handle nested data for "residentialLocation" field.

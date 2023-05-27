@@ -1,71 +1,89 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'transaction_history_record.g.dart';
+class TransactionHistoryRecord extends FirestoreRecord {
+  TransactionHistoryRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class TransactionHistoryRecord
-    implements
-        Built<TransactionHistoryRecord, TransactionHistoryRecordBuilder> {
-  static Serializer<TransactionHistoryRecord> get serializer =>
-      _$transactionHistoryRecordSerializer;
+  // "SentTo" field.
+  String? _sentTo;
+  String get sentTo => _sentTo ?? '';
+  bool hasSentTo() => _sentTo != null;
 
-  @BuiltValueField(wireName: 'SentTo')
-  String? get sentTo;
+  // "Currency" field.
+  String? _currency;
+  String get currency => _currency ?? '';
+  bool hasCurrency() => _currency != null;
 
-  @BuiltValueField(wireName: 'Currency')
-  String? get currency;
+  // "Amount" field.
+  String? _amount;
+  String get amount => _amount ?? '';
+  bool hasAmount() => _amount != null;
 
-  @BuiltValueField(wireName: 'Amount')
-  String? get amount;
+  // "AmountinINR" field.
+  int? _amountinINR;
+  int get amountinINR => _amountinINR ?? 0;
+  bool hasAmountinINR() => _amountinINR != null;
 
-  @BuiltValueField(wireName: 'AmountinINR')
-  int? get amountinINR;
+  // "By" field.
+  DocumentReference? _by;
+  DocumentReference? get by => _by;
+  bool hasBy() => _by != null;
 
-  @BuiltValueField(wireName: 'By')
-  DocumentReference? get by;
+  // "Transactiontime" field.
+  DateTime? _transactiontime;
+  DateTime? get transactiontime => _transactiontime;
+  bool hasTransactiontime() => _transactiontime != null;
 
-  @BuiltValueField(wireName: 'Transactiontime')
-  DateTime? get transactiontime;
+  // "SentToID" field.
+  String? _sentToID;
+  String get sentToID => _sentToID ?? '';
+  bool hasSentToID() => _sentToID != null;
 
-  @BuiltValueField(wireName: 'SentToID')
-  String? get sentToID;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(TransactionHistoryRecordBuilder builder) =>
-      builder
-        ..sentTo = ''
-        ..currency = ''
-        ..amount = ''
-        ..amountinINR = 0
-        ..sentToID = '';
+  void _initializeFields() {
+    _sentTo = snapshotData['SentTo'] as String?;
+    _currency = snapshotData['Currency'] as String?;
+    _amount = snapshotData['Amount'] as String?;
+    _amountinINR = snapshotData['AmountinINR'] as int?;
+    _by = snapshotData['By'] as DocumentReference?;
+    _transactiontime = snapshotData['Transactiontime'] as DateTime?;
+    _sentToID = snapshotData['SentToID'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('Transaction_History');
 
   static Stream<TransactionHistoryRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => TransactionHistoryRecord.fromSnapshot(s));
 
   static Future<TransactionHistoryRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => TransactionHistoryRecord.fromSnapshot(s));
 
-  TransactionHistoryRecord._();
-  factory TransactionHistoryRecord(
-          [void Function(TransactionHistoryRecordBuilder) updates]) =
-      _$TransactionHistoryRecord;
+  static TransactionHistoryRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      TransactionHistoryRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static TransactionHistoryRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      TransactionHistoryRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'TransactionHistoryRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createTransactionHistoryRecordData({
@@ -77,18 +95,16 @@ Map<String, dynamic> createTransactionHistoryRecordData({
   DateTime? transactiontime,
   String? sentToID,
 }) {
-  final firestoreData = serializers.toFirestore(
-    TransactionHistoryRecord.serializer,
-    TransactionHistoryRecord(
-      (t) => t
-        ..sentTo = sentTo
-        ..currency = currency
-        ..amount = amount
-        ..amountinINR = amountinINR
-        ..by = by
-        ..transactiontime = transactiontime
-        ..sentToID = sentToID,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'SentTo': sentTo,
+      'Currency': currency,
+      'Amount': amount,
+      'AmountinINR': amountinINR,
+      'By': by,
+      'Transactiontime': transactiontime,
+      'SentToID': sentToID,
+    }.withoutNulls,
   );
 
   return firestoreData;

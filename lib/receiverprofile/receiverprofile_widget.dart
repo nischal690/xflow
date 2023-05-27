@@ -140,6 +140,7 @@ class _ReceiverprofileWidgetState extends State<ReceiverprofileWidget> {
               elevation: 0.0,
             ),
             body: SafeArea(
+              top: true,
               child: Stack(
                 children: [
                   Align(
@@ -244,7 +245,6 @@ class _ReceiverprofileWidgetState extends State<ReceiverprofileWidget> {
                                       0.0, 12.0, 0.0, 0.0),
                                   child: Container(
                                     width: 300.0,
-                                    height: 144.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
