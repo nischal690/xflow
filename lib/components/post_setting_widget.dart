@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'post_setting_model.dart';
@@ -34,8 +35,6 @@ class _PostSettingWidgetState extends State<PostSettingWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PostSettingModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -59,7 +58,9 @@ class _PostSettingWidgetState extends State<PostSettingWidget> {
               width: 50.0,
               height: 50.0,
               child: CircularProgressIndicator(
-                color: Color(0xEA000000),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Color(0xEA000000),
+                ),
               ),
             ),
           );
@@ -107,7 +108,9 @@ class _PostSettingWidgetState extends State<PostSettingWidget> {
                                 width: 50.0,
                                 height: 50.0,
                                 child: CircularProgressIndicator(
-                                  color: Color(0xEA000000),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xEA000000),
+                                  ),
                                 ),
                               ),
                             );

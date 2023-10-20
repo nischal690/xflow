@@ -1,16 +1,19 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'empty_comment_widget.dart' show EmptyCommentWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class EmptyCommentModel extends FlutterFlowModel {
+class EmptyCommentModel extends FlutterFlowModel<EmptyCommentWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
 
   void dispose() {}
 
-  /// Additional helper methods are added here.
+  /// Action blocks are added here.
 
+  /// Additional helper methods are added here.
 }

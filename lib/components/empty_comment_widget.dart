@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_comment_model.dart';
@@ -26,8 +27,6 @@ class _EmptyCommentWidgetState extends State<EmptyCommentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyCommentModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -57,7 +56,7 @@ class _EmptyCommentWidgetState extends State<EmptyCommentWidget> {
         borderRadius: BorderRadius.circular(28.0),
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.0, 0.0),
+        alignment: AlignmentDirectional(0.00, 0.00),
         child: Text(
           'No comments yet!!',
           style: FlutterFlowTheme.of(context).bodyMedium.override(

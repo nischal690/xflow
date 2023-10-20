@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "772665708682-fougnt2vfakdnq0do9v11vndb8fbcf2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.xflowapp",
+            "certificate_hash": "457d415ce7d74f82ca7134bd7f212118163117b2"
+          }
+        },
+        {
           "client_id": "772665708682-mec1oigten2m2ut8hnp66ii1gv8lhko9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

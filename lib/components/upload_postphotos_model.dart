@@ -3,12 +3,14 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import 'upload_postphotos_widget.dart' show UploadPostphotosWidget;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class UploadPostphotosModel extends FlutterFlowModel {
+class UploadPostphotosModel extends FlutterFlowModel<UploadPostphotosWidget> {
   ///  State fields for stateful widgets in this component.
 
   bool isDataUploading1 = false;
@@ -27,6 +29,7 @@ class UploadPostphotosModel extends FlutterFlowModel {
 
   void dispose() {}
 
-  /// Additional helper methods are added here.
+  /// Action blocks are added here.
 
+  /// Additional helper methods are added here.
 }

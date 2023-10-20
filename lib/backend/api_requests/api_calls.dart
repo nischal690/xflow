@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../../flutter_flow/flutter_flow_util.dart';
-
+import '/flutter_flow/flutter_flow_util.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -23,9 +22,9 @@ class SendFullPromptCall {
   Future<ApiCallResponse> call({
     String? apiKey = '',
     dynamic? promptJson,
-  }) {
+  }) async {
     final prompt = _serializeJson(promptJson);
-    final body = '''
+    final ffApiRequestBody = '''
 {
   "model": "gpt-3.5-turbo",
   "messages": ${prompt}
@@ -35,11 +34,11 @@ class SendFullPromptCall {
       apiUrl: '${OpenAIChatGPTGroup.baseUrl}/chat/completions',
       callType: ApiCallType.POST,
       headers: {
-        ...OpenAIChatGPTGroup.headers,
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ${apiKey}',
       },
       params: {},
-      body: body,
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -75,13 +74,12 @@ class PaypalGroup {
 }
 
 class GenerateAccessTokenCall {
-  Future<ApiCallResponse> call() {
+  Future<ApiCallResponse> call() async {
     return ApiManager.instance.makeApiCall(
       callName: 'generate access token',
       apiUrl: '${PaypalGroup.baseUrl}/v1/oauth2/token',
       callType: ApiCallType.POST,
       headers: {
-        ...PaypalGroup.headers,
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization':
             'Basic QWJOaWRiYUJxaHNOOG1rNmY3cWxlSHhWYTVtUDc4ZUhLMkJ3dU5id3MtVHRxaVQtdFFOd1FHWWhLcFhjVWdZNFZwU1lKdTlFT0tYdUdSZjkwOkVMd2Z6UGpoaktnTng0My16TnVNOVlfT200Mmt3WWVsei1nSUozN3liOS1JZ0EtLV9vbzZqSnlmTzQ2MXhZSzhtYWM1NzRyeEhUMkhWZXc=',
@@ -102,8 +100,8 @@ class PaymentsCall {
   Future<ApiCallResponse> call({
     String? accesstoken =
         'A21AAKAE51mvuBW67CaYhooul56kQC4kcsi5xUxs1m4uCSGIXokQXxfFIswb7NZlQrt9-BOvzEf5AnWaIpPtLq701v4eAbaJg',
-  }) {
-    final body = '''
+  }) async {
+    final ffApiRequestBody = '''
 {
   "intent": "sale",
   "payer": {
@@ -175,13 +173,12 @@ class PaymentsCall {
       apiUrl: '${PaypalGroup.baseUrl}/v1/payments/payment',
       callType: ApiCallType.POST,
       headers: {
-        ...PaypalGroup.headers,
         'Content-type': 'application/json',
         'Authorization':
             'Bearer A21AAKAE51mvuBW67CaYhooul56kQC4kcsi5xUxs1m4uCSGIXokQXxfFIswb7NZlQrt9-BOvzEf5AnWaIpPtLq701v4eAbaJg',
       },
       params: {},
-      body: body,
+      body: ffApiRequestBody,
       bodyType: BodyType.TEXT,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -198,7 +195,7 @@ class CurrencyconverterCall {
     String? to = '',
     String? from = '',
     double? amount,
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'currencyconverter',
       apiUrl: 'https://api.apilayer.com/exchangerates_data/convert?',
@@ -227,7 +224,7 @@ class CurrencyconverterCall {
 class LatlangtocountryCall {
   static Future<ApiCallResponse> call({
     String? latlng = '40.714224,-73.96145',
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'latlangtocountry',
       apiUrl: 'rapidapi.com/v1/reverse',
@@ -252,7 +249,7 @@ class LatlangtocountryCall {
 class CurrencyfromcountryCall {
   static Future<ApiCallResponse> call({
     String? shortform = '',
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'currencyfromcountry',
       apiUrl: 'https://restcountries.com/v2/alpha/${shortform}',
@@ -279,7 +276,7 @@ class CurrencyfromcountryCall {
 class FlagsandshortformCall {
   static Future<ApiCallResponse> call({
     String? countryname = '',
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'flagsandshortform',
       apiUrl:
@@ -308,7 +305,7 @@ class CurrentlatlangcountryCall {
   static Future<ApiCallResponse> call({
     String? lon = '',
     String? lat = '',
-  }) {
+  }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'currentlatlangcountry',
       apiUrl: 'https://nominatim.openstreetmap.org/reverse?',
@@ -335,8 +332,8 @@ class CurrentlatlangcountryCall {
 class GetcitiesCall {
   static Future<ApiCallResponse> call({
     String? country = 'usa',
-  }) {
-    final body = '''
+  }) async {
+    final ffApiRequestBody = '''
 {
   "country": "${country}"
 }''';
@@ -346,7 +343,7 @@ class GetcitiesCall {
       callType: ApiCallType.POST,
       headers: {},
       params: {},
-      body: body,
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -359,6 +356,84 @@ class GetcitiesCall {
         response,
         r'''$.data''',
         true,
+      );
+}
+
+class StripepaymentIntentCall {
+  static Future<ApiCallResponse> call({
+    String? transactionid = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'stripepayment intent',
+      apiUrl: 'https://api.stripe.com/v1/payment_intents/${transactionid}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization':
+            'Bearer sk_test_51Nt4bnEeDxhnTeYJDYm8CHlklrDNOJmAWfnPuho58poep2lV3thyDloKOlsBqBq3dbBdPtK741I1joc0dM1VCokz00aTVJ00KK',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic getcharge(dynamic response) => getJsonField(
+        response,
+        r'''$.latest_charge''',
+      );
+}
+
+class StripeGetTransactionIdCall {
+  static Future<ApiCallResponse> call({
+    String? chargeid = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'stripe get transaction id',
+      apiUrl: 'https://api.stripe.com/v1/charges/${chargeid}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization':
+            'Bearer sk_test_51Nt4bnEeDxhnTeYJDYm8CHlklrDNOJmAWfnPuho58poep2lV3thyDloKOlsBqBq3dbBdPtK741I1joc0dM1VCokz00aTVJ00KK',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic transactionid(dynamic response) => getJsonField(
+        response,
+        r'''$.balance_transaction''',
+      );
+}
+
+class StripeGetTransactionDetailsCall {
+  static Future<ApiCallResponse> call({
+    String? transactionid = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'stripe get transaction details',
+      apiUrl: 'https://api.stripe.com/v1/balance_transactions/${transactionid}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Authorization':
+            'Bearer sk_test_51Nt4bnEeDxhnTeYJDYm8CHlklrDNOJmAWfnPuho58poep2lV3thyDloKOlsBqBq3dbBdPtK741I1joc0dM1VCokz00aTVJ00KK',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic netamount(dynamic response) => getJsonField(
+        response,
+        r'''$.net''',
       );
 }
 
@@ -387,11 +462,11 @@ String _serializeList(List? list) {
   }
 }
 
-String _serializeJson(dynamic jsonVar) {
-  jsonVar ??= {};
+String _serializeJson(dynamic jsonVar, [bool isList = false]) {
+  jsonVar ??= (isList ? [] : {});
   try {
     return json.encode(jsonVar);
   } catch (_) {
-    return '{}';
+    return isList ? '[]' : '{}';
   }
 }

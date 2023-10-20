@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'noprofilepost_model.dart';
@@ -26,8 +27,6 @@ class _NoprofilepostWidgetState extends State<NoprofilepostWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NoprofilepostModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -52,7 +51,7 @@ class _NoprofilepostWidgetState extends State<NoprofilepostWidget> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.00, -1.00),
             child: Image.asset(
               'assets/images/666-6669276_zzz-sleep-png_1.png',
               width: 103.3,
@@ -98,49 +97,37 @@ class _NoprofilepostWidgetState extends State<NoprofilepostWidget> {
               ],
               borderRadius: BorderRadius.circular(100.0),
             ),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                logFirebaseEvent('NOPROFILEPOST_COMP_Row_01iwu99k_ON_TAP');
-                logFirebaseEvent('Row_navigate_to');
-
-                context.pushNamed('addPost');
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 24.0,
-                    height: 24.0,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.add,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 24.0,
+                  height: 24.0,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.circle,
+                    border: Border.all(
                       color: Colors.white,
-                      size: 16.0,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                    child: Text(
-                      'Create New Post',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Nunito',
-                            color: Colors.white,
-                          ),
-                    ),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 16.0,
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                  child: Text(
+                    'Create New Post',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Nunito',
+                          color: Colors.white,
+                        ),
+                  ),
+                ),
+              ],
             ),
           ),
           Padding(
@@ -159,34 +146,21 @@ class _NoprofilepostWidgetState extends State<NoprofilepostWidget> {
                 ],
                 borderRadius: BorderRadius.circular(100.0),
               ),
-              child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  logFirebaseEvent('NOPROFILEPOST_COMP_Row_jsde23op_ON_TAP');
-                  logFirebaseEvent('Row_navigate_to');
-
-                  context.pushNamed('Community');
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                      child: Text(
-                        'Browse other people posts',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: Colors.black,
-                            ),
-                      ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
+                    child: Text(
+                      'Browse other people posts',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Nunito',
+                            color: Colors.black,
+                          ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

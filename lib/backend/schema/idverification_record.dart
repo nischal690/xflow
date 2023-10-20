@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
@@ -78,6 +80,14 @@ class IdverificationRecord extends FirestoreRecord {
   @override
   String toString() =>
       'IdverificationRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is IdverificationRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createIdverificationRecordData({
@@ -98,4 +108,25 @@ Map<String, dynamic> createIdverificationRecordData({
   );
 
   return firestoreData;
+}
+
+class IdverificationRecordDocumentEquality
+    implements Equality<IdverificationRecord> {
+  const IdverificationRecordDocumentEquality();
+
+  @override
+  bool equals(IdverificationRecord? e1, IdverificationRecord? e2) {
+    return e1?.idissuedcountry == e2?.idissuedcountry &&
+        e1?.idtype == e2?.idtype &&
+        e1?.idfront == e2?.idfront &&
+        e1?.idback == e2?.idback &&
+        e1?.idpdf == e2?.idpdf;
+  }
+
+  @override
+  int hash(IdverificationRecord? e) => const ListEquality()
+      .hash([e?.idissuedcountry, e?.idtype, e?.idfront, e?.idback, e?.idpdf]);
+
+  @override
+  bool isValidKey(Object? o) => o is IdverificationRecord;
 }

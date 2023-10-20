@@ -1,14 +1,26 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/select_country_widget.dart';
+import '/components/set_pin_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:ui';
+import '/custom_code/actions/index.dart' as actions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'navbar_model.dart';
 export 'navbar_model.dart';
 
 class NavbarWidget extends StatefulWidget {
-  const NavbarWidget({Key? key}) : super(key: key);
+  const NavbarWidget({
+    Key? key,
+    this.transaction,
+  }) : super(key: key);
+
+  final TransactionHistoryRecord? transaction;
 
   @override
   _NavbarWidgetState createState() => _NavbarWidgetState();
@@ -27,8 +39,6 @@ class _NavbarWidgetState extends State<NavbarWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NavbarModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -62,9 +72,8 @@ class _NavbarWidgetState extends State<NavbarWidget> {
             verticalDirection: VerticalDirection.down,
             clipBehavior: Clip.none,
             children: [
-              Visibility(
-                visible: !FFAppState().Home,
-                child: InkWell(
+              if (!FFAppState().Home)
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
@@ -102,26 +111,9 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                     ],
                   ),
                 ),
-              ),
               Stack(
                 alignment: AlignmentDirectional(0.34, -0.7),
                 children: [
-                  ClipOval(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 2.0,
-                        sigmaY: 2.0,
-                      ),
-                      child: Container(
-                        width: 18.0,
-                        height: 18.0,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFE2F692),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                  ),
                   if (FFAppState().Home)
                     InkWell(
                       splashColor: Colors.transparent,
@@ -177,126 +169,8 @@ class _NavbarWidgetState extends State<NavbarWidget> {
             verticalDirection: VerticalDirection.down,
             clipBehavior: Clip.none,
             children: [
-              Visibility(
-                visible: !FFAppState().community,
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    logFirebaseEvent('NAVBAR_COMP_Column_wng5ji5d_ON_TAP');
-                    logFirebaseEvent('Column_update_app_state');
-                    FFAppState().update(() {
-                      FFAppState().Home = false;
-                      FFAppState().Transact = false;
-                      FFAppState().History = false;
-                      FFAppState().community = true;
-                    });
-                    logFirebaseEvent('Column_navigate_to');
-
-                    context.pushNamed('Community');
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        FFIcons.kpeople,
-                        color: Color(0x33000000),
-                        size: 24.0,
-                      ),
-                      Text(
-                        'Community',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Nunito',
-                              color: Color(0x34101213),
-                              lineHeight: 2.0,
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Stack(
-                alignment: AlignmentDirectional(0.34, -0.7),
-                children: [
-                  if (FFAppState().community)
-                    ClipOval(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 2.0,
-                          sigmaY: 2.0,
-                        ),
-                        child: Container(
-                          width: 18.0,
-                          height: 18.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE2F692),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (FFAppState().community)
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        logFirebaseEvent('NAVBAR_COMP_Column_btd9wlyi_ON_TAP');
-                        logFirebaseEvent('Column_update_app_state');
-                        FFAppState().update(() {
-                          FFAppState().Home = true;
-                          FFAppState().Transact = false;
-                          FFAppState().History = false;
-                          FFAppState().community = true;
-                        });
-                        logFirebaseEvent('Column_navigate_to');
-
-                        context.pushNamed('Community');
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (FFAppState().community)
-                            Icon(
-                              FFIcons.kpeople,
-                              color: Colors.black,
-                              size: 24.0,
-                            ),
-                          Text(
-                            'Community',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  color: Color(0xFF101213),
-                                  lineHeight: 2.0,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            ],
-          ),
-          Wrap(
-            spacing: 0.0,
-            runSpacing: 0.0,
-            alignment: WrapAlignment.start,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            direction: Axis.horizontal,
-            runAlignment: WrapAlignment.start,
-            verticalDirection: VerticalDirection.down,
-            clipBehavior: Clip.none,
-            children: [
-              Visibility(
-                visible: !FFAppState().Transact,
-                child: InkWell(
+              if (!FFAppState().Transact)
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
@@ -310,9 +184,153 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       FFAppState().History = false;
                       FFAppState().community = false;
                     });
-                    logFirebaseEvent('Column_navigate_to');
+                    if ((valueOrDefault(currentUserDocument?.pin, 0) == null) ||
+                        (valueOrDefault(currentUserDocument?.pin, 0) == 0)) {
+                      logFirebaseEvent('Column_bottom_sheet');
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: Container(
+                              height: double.infinity,
+                              child: SetPinWidget(),
+                            ),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+                    } else {
+                      if (FFAppState().paymentCountry != null &&
+                          FFAppState().paymentCountry != '') {
+                        logFirebaseEvent('Column_scan_barcode_q_r_code');
+                        _model.qrData0 =
+                            await FlutterBarcodeScanner.scanBarcode(
+                          '#C62828', // scanning line color
+                          'Cancel', // cancel button text
+                          true, // whether to show the flash icon
+                          ScanMode.QR,
+                        );
 
-                    context.pushNamed('Transact');
+                        logFirebaseEvent('Column_custom_action');
+                        _model.na0 = await actions.identifyQRData(
+                          _model.qrData0!,
+                        );
+                        if (_model.na0 == 'PromptPay') {
+                          logFirebaseEvent('Column_backend_call');
+
+                          var transactionHistoryRecordReference1 =
+                              TransactionHistoryRecord.collection.doc();
+                          await transactionHistoryRecordReference1
+                              .set(createTransactionHistoryRecordData(
+                            country: 'Thailand',
+                            qRdata: _model.qrData0,
+                            transactiontime: getCurrentTimestamp,
+                            by: currentUserReference,
+                            success: false,
+                          ));
+                          _model.transaction0 =
+                              TransactionHistoryRecord.getDocumentFromData(
+                                  createTransactionHistoryRecordData(
+                                    country: 'Thailand',
+                                    qRdata: _model.qrData0,
+                                    transactiontime: getCurrentTimestamp,
+                                    by: currentUserReference,
+                                    success: false,
+                                  ),
+                                  transactionHistoryRecordReference1);
+                          logFirebaseEvent('Column_navigate_to');
+
+                          context.goNamed(
+                            'receiverProfile',
+                            queryParameters: {
+                              'transactiondocument': serializeParam(
+                                _model.transaction0,
+                                ParamType.Document,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              'transactiondocument': _model.transaction0,
+                            },
+                          );
+                        } else {
+                          if (_model.na0 == 'UPI ID') {
+                            logFirebaseEvent('Column_backend_call');
+
+                            var transactionHistoryRecordReference2 =
+                                TransactionHistoryRecord.collection.doc();
+                            await transactionHistoryRecordReference2
+                                .set(createTransactionHistoryRecordData(
+                              country: 'India',
+                              qRdata: _model.qrData0,
+                              transactiontime: getCurrentTimestamp,
+                              by: currentUserReference,
+                              success: false,
+                            ));
+                            _model.transaction3 =
+                                TransactionHistoryRecord.getDocumentFromData(
+                                    createTransactionHistoryRecordData(
+                                      country: 'India',
+                                      qRdata: _model.qrData0,
+                                      transactiontime: getCurrentTimestamp,
+                                      by: currentUserReference,
+                                      success: false,
+                                    ),
+                                    transactionHistoryRecordReference2);
+                            logFirebaseEvent('Column_navigate_to');
+
+                            context.goNamed(
+                              'receiverProfile',
+                              queryParameters: {
+                                'transactiondocument': serializeParam(
+                                  _model.transaction3,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'transactiondocument': _model.transaction3,
+                              },
+                            );
+                          } else {
+                            logFirebaseEvent('Column_show_snack_bar');
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Scan a valid QR ',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context).error,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            );
+                          }
+                        }
+                      } else {
+                        logFirebaseEvent('Column_bottom_sheet');
+                        await showModalBottomSheet(
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          enableDrag: false,
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: MediaQuery.viewInsetsOf(context),
+                              child: Container(
+                                height: double.infinity,
+                                child: SelectCountryWidget(),
+                              ),
+                            );
+                          },
+                        ).then((value) => safeSetState(() {}));
+                      }
+                    }
+
+                    setState(() {});
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -334,70 +352,6 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                     ],
                   ),
                 ),
-              ),
-              Stack(
-                alignment: AlignmentDirectional(0.34, -0.7),
-                children: [
-                  if (FFAppState().Transact)
-                    ClipOval(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 10.0,
-                          sigmaY: 10.0,
-                        ),
-                        child: Container(
-                          width: 18.0,
-                          height: 18.0,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE2F692),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  if (FFAppState().Transact)
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        logFirebaseEvent('NAVBAR_COMP_Column_sl91uwpw_ON_TAP');
-                        logFirebaseEvent('Column_update_app_state');
-                        FFAppState().update(() {
-                          FFAppState().Home = false;
-                          FFAppState().Transact = true;
-                          FFAppState().History = false;
-                          FFAppState().community = false;
-                        });
-                        logFirebaseEvent('Column_navigate_to');
-
-                        context.pushNamed('Transact');
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.swap_horiz,
-                            color: Colors.black,
-                            size: 24.0,
-                          ),
-                          Text(
-                            'Transact',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Nunito',
-                                  color: Color(0xFF101213),
-                                  lineHeight: 2.0,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
             ],
           ),
           Wrap(
@@ -410,9 +364,8 @@ class _NavbarWidgetState extends State<NavbarWidget> {
             verticalDirection: VerticalDirection.down,
             clipBehavior: Clip.none,
             children: [
-              Visibility(
-                visible: !FFAppState().History,
-                child: InkWell(
+              if (!FFAppState().History)
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
@@ -426,6 +379,9 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       FFAppState().History = true;
                       FFAppState().community = false;
                     });
+                    logFirebaseEvent('Column_navigate_to');
+
+                    context.pushNamed('History');
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -447,10 +403,8 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                     ],
                   ),
                 ),
-              ),
-              Visibility(
-                visible: FFAppState().History,
-                child: InkWell(
+              if (FFAppState().History)
+                InkWell(
                   splashColor: Colors.transparent,
                   focusColor: Colors.transparent,
                   hoverColor: Colors.transparent,
@@ -464,6 +418,9 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       FFAppState().History = true;
                       FFAppState().community = false;
                     });
+                    logFirebaseEvent('Column_navigate_to');
+
+                    context.pushNamed('History');
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -485,7 +442,6 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                     ],
                   ),
                 ),
-              ),
             ],
           ),
         ],

@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'nopost_model.dart';
@@ -26,8 +27,6 @@ class _NopostWidgetState extends State<NopostWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => NopostModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -52,7 +51,7 @@ class _NopostWidgetState extends State<NopostWidget> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: AlignmentDirectional(0.00, -1.00),
             child: Image.asset(
               'assets/images/666-6669276_zzz-sleep-png_1.png',
               width: 103.3,

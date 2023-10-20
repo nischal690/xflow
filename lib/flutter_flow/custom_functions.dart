@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
+import 'uploaded_file.dart';
 import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '/backend/schema/structs/index.dart';
@@ -260,6 +261,28 @@ List<String> getCountryList() {
 
   return countries;
   // <<< Up to this
+}
+
+FetchqrDataIndiaStruct fetchqrDataUPI(String string) {
+  try {
+    final Uri uri = Uri.parse(string);
+    final Map<String, String> queryParams = uri.queryParameters;
+
+    if (queryParams.containsKey('pa') && queryParams.containsKey('pn')) {
+      final String upiid = queryParams['pa']!;
+      final String name = Uri.decodeComponent(queryParams['pn']!);
+      return FetchqrDataIndiaStruct(
+        name: name,
+        upiid: upiid,
+      );
+    } else {
+      print('Error: UPI ID or Name not found in the QR data');
+      return FetchqrDataIndiaStruct();
+    }
+  } catch (e) {
+    print('Error parsing QR data: $e');
+    return FetchqrDataIndiaStruct();
+  }
 }
 
 String getupiidfromupilink(String upilink) {
@@ -951,30 +974,8 @@ dynamic saveChatHistory(
 List<String> currenciessupported() {
   {
     Map<String, String> currencies = {
-      'Australian dollar': 'AUD',
-      'Brazilian real': 'BRL',
-      'Canadian dollar': 'CAD',
-      'Chinese Renminbi': 'CNY',
-      'Czech koruna': 'CZK',
-      'Danish krone': 'DKK',
+      'Indian Rupees': 'INR',
       'Euro': 'EUR',
-      'Hong Kong dollar': 'HKD',
-      'Hungarian forint': 'HUF',
-      'Israeli new shekel': 'ILS',
-      'Japanese yen': 'JPY',
-      'Malaysian ringgit': 'MYR',
-      'Mexican peso': 'MXN',
-      'New Taiwan dollar': 'TWD',
-      'New Zealand dollar': 'NZD',
-      'Norwegian krone': 'NOK',
-      'Philippine peso': 'PHP',
-      'Polish złoty': 'PLN',
-      'Pound sterling': 'GBP',
-      'Russian ruble': 'RUB',
-      'Singapore dollar': 'SGD',
-      'Swedish krona': 'SEK',
-      'Swiss franc': 'CHF',
-      'Thai baht': 'THB',
       'United States dollar': 'USD',
     };
 
@@ -1028,4 +1029,398 @@ String returncurrencyfullname(String currencycode) {
   return "Amount (in " + currency + " )";
 
   // Example usage:
+}
+
+String newCustomFunction() {
+  return "nsichalnayak2000@gmail.com";
+}
+
+String extractPPInfoForFlutterFlow(String content) {
+// Define constants and helper functions here, inside the main function
+  const String PP_APP_ID_USER = 'A000000677010111';
+  const String PP_APP_ID_MERCHANT = 'A000000677010112';
+  final Map<String, String> QR_TYPE = {
+    '11': 'Never expire QR-Code',
+    '12': 'One-time QR-Code',
+  };
+  final Map<String, String> ACCOUNT_TYPE = {
+    '01': 'Telephone Number',
+    '02': 'Thai ID Card',
+    '03': 'e-Wallet ID',
+  };
+
+  Map<String, String> _decode(String ppText) {
+    var ppObj = <String, String>{};
+    String? fieldNo;
+    int? fieldSize;
+    for (var i = 0; i < ppText.length; i++) {
+      if (fieldNo == null) {
+        fieldNo = ppText.substring(i, i + 2);
+        i += 1;
+      } else if (fieldSize == null) {
+        fieldSize = int.parse(ppText.substring(i, i + 2));
+        i += 1;
+      } else {
+        ppObj[fieldNo] = ppText.substring(i, i + fieldSize);
+        i += (fieldSize - 1);
+        fieldNo = null;
+        fieldSize = null;
+      }
+    }
+    return ppObj;
+  }
+
+  var obj = _decode(content);
+
+  // Additional decoding logic similar to the JavaScript version
+  var merchantInfo = obj['29'] ?? '';
+  if (merchantInfo.isNotEmpty) {
+    var merchantObj = _decode(merchantInfo);
+    if (merchantObj['00'] == PP_APP_ID_USER) {
+      merchantObj.forEach((k, v) {
+        if (k != '00') {
+          obj['29_acc_type'] = ACCOUNT_TYPE[k] ?? '';
+          obj['29_acc_no'] = v;
+        }
+      });
+    }
+  }
+
+  merchantInfo = obj['30'] ?? '';
+  if (merchantInfo.isNotEmpty) {
+    var merchantObj = _decode(merchantInfo);
+    if (merchantObj['00'] == PP_APP_ID_MERCHANT) {
+      obj['30_biller_id'] = merchantObj['01'] ?? '';
+      obj['30_merchant_id'] = merchantObj['02'] ?? '';
+      obj['30_txn_id'] = merchantObj['03'] ?? '';
+    }
+  }
+
+  obj['QR_Type'] = QR_TYPE[obj['01']] ?? '';
+
+  if (obj['54'] != null) {
+    obj['Amount'] = obj['54']!;
+  } else {
+    obj['Amount'] = 'N/A';
+  }
+
+  return jsonEncode(obj);
+}
+
+int amountforStripe(String amount) {
+  // if i transfer string as 50 i want to return integer as 5000
+  int parsedAmount = int.parse(amount);
+  return parsedAmount * 100;
+}
+
+bool returnEurope(String country) {
+  // check if the country is in europe or not
+  List<String> europeanCountries = [
+    'Albania',
+    'Andorra',
+    'Austria',
+    'Belarus',
+    'Belgium',
+    'Bosnia and Herzegovina',
+    'Bulgaria',
+    'Croatia',
+    'Cyprus',
+    'Czech Republic',
+    'Denmark',
+    'Estonia',
+    'Finland',
+    'France',
+    'Germany',
+    'Greece',
+    'Hungary',
+    'Iceland',
+    'Ireland',
+    'Italy',
+    'Kosovo',
+    'Latvia',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Malta',
+    'Moldova',
+    'Monaco',
+    'Montenegro',
+    'Netherlands',
+    'North Macedonia',
+    'Norway',
+    'Poland',
+    'Portugal',
+    'Romania',
+    'Russia',
+    'San Marino',
+    'Serbia',
+    'Slovakia',
+    'Slovenia',
+    'Spain',
+    'Sweden',
+    'Switzerland',
+    'Ukraine',
+    'United Kingdom',
+    'Vatican City'
+  ];
+
+  return europeanCountries.contains(country);
+}
+
+double currencytodouble(String currencybalance) {
+  // convert currency string to double
+// Remove all non-numeric characters from the currency string
+  final cleanedString = currencybalance.replaceAll(RegExp(r'[^\d.]'), '');
+
+  // Parse the cleaned string as a double
+  final doubleValue = double.parse(cleanedString);
+
+  return doubleValue;
+}
+
+int? stringtoInt(String? number) {
+  // convert string to integer
+  if (number == null) {
+    return null;
+  }
+  return int.tryParse(number);
+}
+
+int convertstringtoint(String number) {
+  // from string to number
+  return int.parse(number);
+}
+
+bool checkiftheuserisindian(String? phonenumber) {
+  // based on the phone number with country code , find out if the number is from india or not
+  if (phonenumber == null) {
+    return false;
+  }
+  if (phonenumber.startsWith('+91')) {
+    return true;
+  }
+  return false;
+}
+
+double convertthaibaht(int amount) {
+  // divide the number by 100 and return it
+  return amount / 100.0;
+}
+
+bool checkifwalletbalanceislow(
+  int amount,
+  String typedamount,
+) {
+  // divide amount by 100 and convert it to double  and compare if amount is greater
+  double convertedAmount = amount / 100.0;
+  double typedAmount = double.parse(typedamount);
+  return typedAmount <= convertedAmount;
+}
+
+QrDataStruct fetchqrData(String string) {
+  try {
+    final Map<String, dynamic> map = json.decode(string);
+    return QrDataStruct(
+      merchantid: map['30_merchant_id'], // Use '30_merchant_id' key from JSON
+      billerid: map['30_biller_id'], // Use '30_biller_id' key from JSON
+      amount: map['Amount'],
+      walletID: map['29_acc_no'], // Use 'Amount' key from JSON
+    );
+  } catch (e) {
+    print('Error parsing QR data: $e');
+    return QrDataStruct();
+  }
+}
+
+double conversionrate(
+  int balanceinthb,
+  String balanceincurrency,
+) {
+  double balanceInCurrencyToDouble = double.parse(balanceincurrency);
+  double conversionRate = (balanceinthb / 100) / balanceInCurrencyToDouble;
+  return conversionRate;
+}
+
+double compareconversionrate(
+  double oldconverstionrate,
+  double newconverstionrate,
+) {
+  // compare both and return the greatest
+  if (newconverstionrate > oldconverstionrate) {
+    return newconverstionrate;
+  } else {
+    return oldconverstionrate;
+  }
+}
+
+String updatebalanceincurrency(
+  double conversionrate,
+  String totalbalanceincurrencynow,
+  String totalpaymentinbaht,
+) {
+  // totalbalanceincurrencynow - (totalpaymentinbaht divided by conversionrate )
+  double balance = double.parse(totalbalanceincurrencynow);
+  double payment = double.parse(totalpaymentinbaht);
+  double convertedPayment = payment / conversionrate;
+  double updatedBalance = balance - convertedPayment;
+
+  if (updatedBalance < 0) {
+    return "0.00";
+  } else {
+    return updatedBalance.toStringAsFixed(2);
+  }
+}
+
+int addthb(
+  int oldthb,
+  int newthb,
+) {
+  return oldthb + newthb;
+}
+
+String updatebalance(
+  String oldcurrency,
+  String newcurrency,
+) {
+  // convert both to double then add it and return it as double
+  double oldBalance = double.parse(oldcurrency);
+  double newBalance = double.parse(newcurrency);
+  double updatedBalance = oldBalance + newBalance;
+
+  if (updatedBalance >= 0) {
+    return updatedBalance.toStringAsFixed(2);
+  } else {
+    return "0.00";
+  }
+}
+
+String returncountry(String phonenumber) {
+  String countryCode = phonenumber.substring(0, 3);
+
+  if (countryCode == '+91') {
+    return 'INR';
+  } else if ([
+    '+43',
+    '+32',
+    '+359',
+    '+385',
+    '+357',
+    '+420',
+    '+45',
+    '+372',
+    '+358',
+    '+33',
+    '+49',
+    '+30',
+    '+36',
+    '+353',
+    '+39',
+    '+371',
+    '+370',
+    '+352',
+    '+356',
+    '+31',
+    '+48',
+    '+351',
+    '+40',
+    '+421',
+    '+386',
+    '+34',
+    '+46'
+  ].contains(countryCode)) {
+    return 'EUR';
+  } else {
+    return 'USD';
+  }
+}
+
+bool comparePin(
+  String pin,
+  String setpin,
+) {
+  // convert both pin to integar and then check if both are equal or not
+  int pinInt = int.parse(pin);
+  int setpinInt = int.parse(setpin);
+
+  return pinInt == setpinInt;
+}
+
+String decreasetheflagsize(String flaglink) {
+  if (flaglink.contains("w320")) {
+    return flaglink.replaceFirst("w320", "w40");
+  } else {
+    return flaglink; // If "w320" is not found, return the original link
+  }
+}
+
+int updatethbbalance(
+  int oldthb,
+  String typedamount,
+) {
+  print(
+      "typedamount: '$typedamount'"); // Print the value for debugging purposes
+
+  try {
+    // Attempt to parse the typedamount string to an integer
+    int amount = int.parse(typedamount);
+    int newBalance = oldthb - (amount * 100);
+
+    if (newBalance < 0) {
+      newBalance = 0;
+    }
+
+    print("oldthb : " + "$oldthb");
+    print("balance : " + "$newBalance");
+
+    return newBalance;
+  } catch (e) {
+    // Handle the FormatException here, for example:
+    print("Error parsing 'typedamount': $e");
+    return 0; // Return 0 when there's a parsing error.
+  }
+}
+
+String encodeUPIForURL(String upi) {
+  return Uri.encodeComponent(upi);
+}
+
+String convertinrtothb(String var1) {
+  // (double.parse(var1) * 0.396).toString()
+  return (double.parse(var1) * 0.396).toString();
+}
+
+int updatethbfrominr(
+  int oldthb,
+  String inr,
+) {
+  // convert inr to double then multiply 0.39 then subtract with oldthb
+  double inrDouble = double.parse(inr);
+  double thb = (oldthb / 100) - inrDouble * 0.39;
+  thb = thb * 100;
+
+  if (thb < 0) {
+    return 0;
+  } else {
+    return thb.toInt();
+  }
+}
+
+String updatecurrencybalancefrominr(
+  String oldcurrencybalance,
+  String inr,
+  String currencyselected,
+) {
+  // if currencyselected is usd then inr/74 and if eur then inr/76
+  double inrValue = double.parse(inr);
+  double oldBalance = double.parse(oldcurrencybalance);
+
+  if (currencyselected == 'USD') {
+    double result = oldBalance - (inrValue / 74);
+    return result >= 0 ? result.toStringAsFixed(2) : "0.00";
+  } else if (currencyselected == 'EUR') {
+    double result = oldBalance - (inrValue / 78);
+    return result >= 0 ? result.toStringAsFixed(2) : "0.00";
+  } else {
+    return oldBalance >= 0 ? oldBalance.toStringAsFixed(2) : "0.00";
+  }
 }

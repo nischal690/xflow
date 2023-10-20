@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
-  static final FFAppState _instance = FFAppState._internal();
+  static FFAppState _instance = FFAppState._internal();
 
   factory FFAppState() {
     return _instance;
@@ -14,12 +14,29 @@ class FFAppState extends ChangeNotifier {
 
   FFAppState._internal();
 
-  Future initializePersistedState() async {}
+  static void reset() {
+    _instance = FFAppState._internal();
+  }
+
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _paymentCountry = prefs.getString('ff_paymentCountry') ?? _paymentCountry;
+    });
+    _safeInit(() {
+      _shortform = prefs.getString('ff_shortform') ?? _shortform;
+    });
+    _safeInit(() {
+      _flag = prefs.getString('ff_flag') ?? _flag;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   bool _Home = false;
   bool get Home => _Home;
@@ -67,18 +84,6 @@ class FFAppState extends ChangeNotifier {
   String get Countryname => _Countryname;
   set Countryname(String _value) {
     _Countryname = _value;
-  }
-
-  String _shortform = '';
-  String get shortform => _shortform;
-  set shortform(String _value) {
-    _shortform = _value;
-  }
-
-  String _flag = '';
-  String get flag => _flag;
-  set flag(String _value) {
-    _flag = _value;
   }
 
   String _currency = '';
@@ -137,9 +142,13 @@ class FFAppState extends ChangeNotifier {
 
   void updateInterestAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_interest[_index]);
+    _interest[_index] = updateFn(_interest[_index]);
+  }
+
+  void insertAtIndexInInterest(int _index, String _value) {
+    _interest.insert(_index, _value);
   }
 
   String _Documenttype = '';
@@ -228,9 +237,13 @@ class FFAppState extends ChangeNotifier {
 
   void updatePosttagsAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_posttags[_index]);
+    _posttags[_index] = updateFn(_posttags[_index]);
+  }
+
+  void insertAtIndexInPosttags(int _index, String _value) {
+    _posttags.insert(_index, _value);
   }
 
   String _tag = '';
@@ -259,9 +272,13 @@ class FFAppState extends ChangeNotifier {
 
   void updatePostPhotosAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_postPhotos[_index]);
+    _postPhotos[_index] = updateFn(_postPhotos[_index]);
+  }
+
+  void insertAtIndexInPostPhotos(int _index, String _value) {
+    _postPhotos.insert(_index, _value);
   }
 
   String _video = '';
@@ -314,9 +331,40 @@ class FFAppState extends ChangeNotifier {
 
   void updateGuidecitiesAtIndex(
     int _index,
-    Function(String) updateFn,
+    String Function(String) updateFn,
   ) {
-    updateFn(_guidecities[_index]);
+    _guidecities[_index] = updateFn(_guidecities[_index]);
+  }
+
+  void insertAtIndexInGuidecities(int _index, String _value) {
+    _guidecities.insert(_index, _value);
+  }
+
+  String _paymentCountry = '';
+  String get paymentCountry => _paymentCountry;
+  set paymentCountry(String _value) {
+    _paymentCountry = _value;
+    prefs.setString('ff_paymentCountry', _value);
+  }
+
+  String _shortform = '';
+  String get shortform => _shortform;
+  set shortform(String _value) {
+    _shortform = _value;
+    prefs.setString('ff_shortform', _value);
+  }
+
+  String _flag = '';
+  String get flag => _flag;
+  set flag(String _value) {
+    _flag = _value;
+    prefs.setString('ff_flag', _value);
+  }
+
+  bool _uploaded = false;
+  bool get uploaded => _uploaded;
+  set uploaded(bool _value) {
+    _uploaded = _value;
   }
 }
 
@@ -328,4 +376,16 @@ LatLng? _latLngFromString(String? val) {
   final lat = double.parse(split.first);
   final lng = double.parse(split.last);
   return LatLng(lat, lng);
+}
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }

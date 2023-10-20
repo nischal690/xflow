@@ -16,7 +16,7 @@ final _isProd = false;
 // Stripe Credentials
 const _kProdStripePublishableKey = '';
 const _kTestStripePublishableKey =
-    'pk_test_51H4hxCHlRTLP2rjh1NRrtjknNhz9SjlCMKDB0EFb1fqcNYE0fi9ky72E4kJRyd9gP03LOFKGsnMJMtlUXhF05Z4Q00QaHLsTTd';
+    'pk_test_51Nt4bnEeDxhnTeYJ7eJC3lUIVLVs47lOcm0pLtpucPnDemepdZ4dFtMu1IxzK7fMsQFOt42bNgiuKQlFC24bkzXt00M6PmVQK2';
 const _kAppleMerchantId = '';
 
 String stripePublishableKey() =>
@@ -91,17 +91,17 @@ Future<StripePaymentResponse> processStripePayment(
         paymentIntentClientSecret: response['paymentIntent'],
         customerEphemeralKeySecret: response['ephemeralKey'],
         customerId: response['customer'],
-        merchantDisplayName: 'Xflow',
+        merchantDisplayName: 'xflow',
         googlePay: allowGooglePay
             ? PaymentSheetGooglePay(
-                merchantCountryCode: '+91',
+                merchantCountryCode: '+66',
                 currencyCode: currency,
                 testEnv: !_isProd,
               )
             : null,
         applePay: isiOS && allowApplePay
             ? PaymentSheetApplePay(
-                merchantCountryCode: '+91',
+                merchantCountryCode: '+66',
               )
             : null,
         style: themeStyle,
@@ -150,7 +150,7 @@ Future<StripePaymentResponse> showWebPaymentSheet(
       ? Theme.of(context).brightness == Brightness.dark
       : themeStyle == ThemeMode.dark;
   buttonColor = buttonColor ?? FlutterFlowTheme.of(context).primary;
-  final screenWidth = MediaQuery.of(context).size.width;
+  final screenWidth = MediaQuery.sizeOf(context).width;
 
   final buildPaymentSheet = (BuildContext context, double width) => Column(
         mainAxisSize: MainAxisSize.min,

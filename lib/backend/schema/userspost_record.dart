@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
@@ -143,6 +145,14 @@ class UserspostRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UserspostRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UserspostRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUserspostRecordData({
@@ -176,4 +186,54 @@ Map<String, dynamic> createUserspostRecordData({
   addLocationStructData(firestoreData, location, 'location');
 
   return firestoreData;
+}
+
+class UserspostRecordDocumentEquality implements Equality<UserspostRecord> {
+  const UserspostRecordDocumentEquality();
+
+  @override
+  bool equals(UserspostRecord? e1, UserspostRecord? e2) {
+    const listEquality = ListEquality();
+    return e1?.content == e2?.content &&
+        e1?.userref == e2?.userref &&
+        e1?.timeanddate == e2?.timeanddate &&
+        e1?.tag == e2?.tag &&
+        listEquality.equals(e1?.smileys, e2?.smileys) &&
+        listEquality.equals(e1?.angry, e2?.angry) &&
+        e1?.reactionbutton == e2?.reactionbutton &&
+        listEquality.equals(e1?.savedby, e2?.savedby) &&
+        listEquality.equals(e1?.photos, e2?.photos) &&
+        e1?.video == e2?.video &&
+        listEquality.equals(e1?.hearts, e2?.hearts) &&
+        listEquality.equals(e1?.sad, e2?.sad) &&
+        e1?.location == e2?.location &&
+        listEquality.equals(e1?.postTags, e2?.postTags) &&
+        e1?.emoji == e2?.emoji &&
+        e1?.audio == e2?.audio &&
+        e1?.type == e2?.type;
+  }
+
+  @override
+  int hash(UserspostRecord? e) => const ListEquality().hash([
+        e?.content,
+        e?.userref,
+        e?.timeanddate,
+        e?.tag,
+        e?.smileys,
+        e?.angry,
+        e?.reactionbutton,
+        e?.savedby,
+        e?.photos,
+        e?.video,
+        e?.hearts,
+        e?.sad,
+        e?.location,
+        e?.postTags,
+        e?.emoji,
+        e?.audio,
+        e?.type
+      ]);
+
+  @override
+  bool isValidKey(Object? o) => o is UserspostRecord;
 }

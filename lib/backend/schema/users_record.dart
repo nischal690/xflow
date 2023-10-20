@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
@@ -54,25 +56,10 @@ class UsersRecord extends FirestoreRecord {
   String get country => _country ?? '';
   bool hasCountry() => _country != null;
 
-  // "Currencytype" field.
-  String? _currencytype;
-  String get currencytype => _currencytype ?? '';
-  bool hasCurrencytype() => _currencytype != null;
-
-  // "amount_in_wallet" field.
-  int? _amountInWallet;
-  int get amountInWallet => _amountInWallet ?? 0;
-  bool hasAmountInWallet() => _amountInWallet != null;
-
   // "latlang" field.
   LatLng? _latlang;
   LatLng? get latlang => _latlang;
   bool hasLatlang() => _latlang != null;
-
-  // "currenciessymbol" field.
-  String? _currenciessymbol;
-  String get currenciessymbol => _currenciessymbol ?? '';
-  bool hasCurrenciessymbol() => _currenciessymbol != null;
 
   // "title" field.
   String? _title;
@@ -150,19 +137,41 @@ class UsersRecord extends FirestoreRecord {
   List<DocumentReference> get savedPosts => _savedPosts ?? const [];
   bool hasSavedPosts() => _savedPosts != null;
 
+  // "balanceinTHB" field.
+  int? _balanceinTHB;
+  int get balanceinTHB => _balanceinTHB ?? 0;
+  bool hasBalanceinTHB() => _balanceinTHB != null;
+
+  // "currencyselected" field.
+  String? _currencyselected;
+  String get currencyselected => _currencyselected ?? '';
+  bool hasCurrencyselected() => _currencyselected != null;
+
+  // "balanceinCurrency" field.
+  String? _balanceinCurrency;
+  String get balanceinCurrency => _balanceinCurrency ?? '';
+  bool hasBalanceinCurrency() => _balanceinCurrency != null;
+
+  // "pin" field.
+  int? _pin;
+  int get pin => _pin ?? 0;
+  bool hasPin() => _pin != null;
+
+  // "conversionrate" field.
+  double? _conversionrate;
+  double get conversionrate => _conversionrate ?? 0.0;
+  bool hasConversionrate() => _conversionrate != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
-    _logincount = snapshotData['logincount'] as int?;
+    _logincount = castToType<int>(snapshotData['logincount']);
     _uid = snapshotData['uid'] as String?;
     _country = snapshotData['country'] as String?;
-    _currencytype = snapshotData['Currencytype'] as String?;
-    _amountInWallet = snapshotData['amount_in_wallet'] as int?;
     _latlang = snapshotData['latlang'] as LatLng?;
-    _currenciessymbol = snapshotData['currenciessymbol'] as String?;
     _title = snapshotData['title'] as String?;
     _dob = snapshotData['DOB'] as DateTime?;
     _residentialLocation =
@@ -180,6 +189,11 @@ class UsersRecord extends FirestoreRecord {
     _beento = getDataList(snapshotData['beento']);
     _waitlistjoined = snapshotData['waitlistjoined'] as bool?;
     _savedPosts = getDataList(snapshotData['savedPosts']);
+    _balanceinTHB = castToType<int>(snapshotData['balanceinTHB']);
+    _currencyselected = snapshotData['currencyselected'] as String?;
+    _balanceinCurrency = snapshotData['balanceinCurrency'] as String?;
+    _pin = castToType<int>(snapshotData['pin']);
+    _conversionrate = castToType<double>(snapshotData['conversionrate']);
   }
 
   static CollectionReference get collection =>
@@ -205,6 +219,14 @@ class UsersRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UsersRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UsersRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUsersRecordData({
@@ -216,10 +238,7 @@ Map<String, dynamic> createUsersRecordData({
   int? logincount,
   String? uid,
   String? country,
-  String? currencytype,
-  int? amountInWallet,
   LatLng? latlang,
-  String? currenciessymbol,
   String? title,
   DateTime? dob,
   LocationStruct? residentialLocation,
@@ -229,6 +248,11 @@ Map<String, dynamic> createUsersRecordData({
   double? chargeamount,
   String? type,
   bool? waitlistjoined,
+  int? balanceinTHB,
+  String? currencyselected,
+  String? balanceinCurrency,
+  int? pin,
+  double? conversionrate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -240,10 +264,7 @@ Map<String, dynamic> createUsersRecordData({
       'logincount': logincount,
       'uid': uid,
       'country': country,
-      'Currencytype': currencytype,
-      'amount_in_wallet': amountInWallet,
       'latlang': latlang,
-      'currenciessymbol': currenciessymbol,
       'title': title,
       'DOB': dob,
       'residentialLocation': LocationStruct().toMap(),
@@ -253,6 +274,11 @@ Map<String, dynamic> createUsersRecordData({
       'chargeamount': chargeamount,
       'type': type,
       'waitlistjoined': waitlistjoined,
+      'balanceinTHB': balanceinTHB,
+      'currencyselected': currencyselected,
+      'balanceinCurrency': balanceinCurrency,
+      'pin': pin,
+      'conversionrate': conversionrate,
     }.withoutNulls,
   );
 
@@ -264,4 +290,78 @@ Map<String, dynamic> createUsersRecordData({
   addLocationStructData(firestoreData, currentLocation, 'currentLocation');
 
   return firestoreData;
+}
+
+class UsersRecordDocumentEquality implements Equality<UsersRecord> {
+  const UsersRecordDocumentEquality();
+
+  @override
+  bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
+    return e1?.email == e2?.email &&
+        e1?.displayName == e2?.displayName &&
+        e1?.photoUrl == e2?.photoUrl &&
+        e1?.createdTime == e2?.createdTime &&
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.logincount == e2?.logincount &&
+        e1?.uid == e2?.uid &&
+        e1?.country == e2?.country &&
+        e1?.latlang == e2?.latlang &&
+        e1?.title == e2?.title &&
+        e1?.dob == e2?.dob &&
+        e1?.residentialLocation == e2?.residentialLocation &&
+        listEquality.equals(e1?.posttags, e2?.posttags) &&
+        listEquality.equals(e1?.followers, e2?.followers) &&
+        listEquality.equals(e1?.followings, e2?.followings) &&
+        e1?.currentLocation == e2?.currentLocation &&
+        e1?.guide == e2?.guide &&
+        e1?.chargefor == e2?.chargefor &&
+        e1?.chargeamount == e2?.chargeamount &&
+        listEquality.equals(e1?.guideCities, e2?.guideCities) &&
+        e1?.type == e2?.type &&
+        listEquality.equals(e1?.beento, e2?.beento) &&
+        e1?.waitlistjoined == e2?.waitlistjoined &&
+        listEquality.equals(e1?.savedPosts, e2?.savedPosts) &&
+        e1?.balanceinTHB == e2?.balanceinTHB &&
+        e1?.currencyselected == e2?.currencyselected &&
+        e1?.balanceinCurrency == e2?.balanceinCurrency &&
+        e1?.pin == e2?.pin &&
+        e1?.conversionrate == e2?.conversionrate;
+  }
+
+  @override
+  int hash(UsersRecord? e) => const ListEquality().hash([
+        e?.email,
+        e?.displayName,
+        e?.photoUrl,
+        e?.createdTime,
+        e?.phoneNumber,
+        e?.logincount,
+        e?.uid,
+        e?.country,
+        e?.latlang,
+        e?.title,
+        e?.dob,
+        e?.residentialLocation,
+        e?.posttags,
+        e?.followers,
+        e?.followings,
+        e?.currentLocation,
+        e?.guide,
+        e?.chargefor,
+        e?.chargeamount,
+        e?.guideCities,
+        e?.type,
+        e?.beento,
+        e?.waitlistjoined,
+        e?.savedPosts,
+        e?.balanceinTHB,
+        e?.currencyselected,
+        e?.balanceinCurrency,
+        e?.pin,
+        e?.conversionrate
+      ]);
+
+  @override
+  bool isValidKey(Object? o) => o is UsersRecord;
 }

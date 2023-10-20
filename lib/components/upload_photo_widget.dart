@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -30,8 +31,6 @@ class _UploadPhotoWidgetState extends State<UploadPhotoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UploadPhotoModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -132,6 +131,7 @@ class _UploadPhotoWidgetState extends State<UploadPhotoWidget> {
                                       m.storagePath, context))) {
                                 setState(() => _model.isDataUploading1 = true);
                                 var selectedUploadedFiles = <FFUploadedFile>[];
+
                                 var downloadUrls = <String>[];
                                 try {
                                   showUploadMessage(
@@ -243,6 +243,7 @@ class _UploadPhotoWidgetState extends State<UploadPhotoWidget> {
                                     m.storagePath, context))) {
                               setState(() => _model.isDataUploading2 = true);
                               var selectedUploadedFiles = <FFUploadedFile>[];
+
                               var downloadUrls = <String>[];
                               try {
                                 showUploadMessage(

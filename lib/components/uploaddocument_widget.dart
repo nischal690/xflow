@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -30,8 +31,6 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UploaddocumentModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -125,6 +124,7 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
                             validateFileFormat(m.storagePath, context))) {
                       setState(() => _model.isDataUploading1 = true);
                       var selectedUploadedFiles = <FFUploadedFile>[];
+
                       var downloadUrls = <String>[];
                       try {
                         selectedUploadedFiles = selectedMedia
@@ -166,6 +166,7 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
                     logFirebaseEvent('Column_update_app_state');
                     FFAppState().update(() {
                       FFAppState().frontSide = _model.uploadedFileUrl1;
+                      FFAppState().uploaded = true;
                     });
                     logFirebaseEvent('Column_bottom_sheet');
                     Navigator.pop(context);
@@ -223,6 +224,7 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
                               validateFileFormat(m.storagePath, context))) {
                         setState(() => _model.isDataUploading2 = true);
                         var selectedUploadedFiles = <FFUploadedFile>[];
+
                         var downloadUrls = <String>[];
                         try {
                           selectedUploadedFiles = selectedMedia
@@ -263,7 +265,8 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
 
                       logFirebaseEvent('Column_update_app_state');
                       FFAppState().update(() {
-                        FFAppState().frontSide = _model.uploadedFileUrl1;
+                        FFAppState().frontSide = _model.uploadedFileUrl2;
+                        FFAppState().uploaded = true;
                       });
                       logFirebaseEvent('Column_bottom_sheet');
                       Navigator.pop(context);
@@ -314,33 +317,48 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
                     onTap: () async {
                       logFirebaseEvent('UPLOADDOCUMENT_Column_p2wobli1_ON_TAP');
                       logFirebaseEvent('Column_upload_file_to_firebase');
-                      final selectedFile =
-                          await selectFile(allowedExtensions: ['pdf']);
-                      if (selectedFile != null) {
+                      final selectedFiles = await selectFiles(
+                        allowedExtensions: ['pdf'],
+                        multiFile: false,
+                      );
+                      if (selectedFiles != null) {
                         setState(() => _model.isDataUploading3 = true);
-                        FFUploadedFile? selectedUploadedFile;
-                        String? downloadUrl;
+                        var selectedUploadedFiles = <FFUploadedFile>[];
+
+                        var downloadUrls = <String>[];
                         try {
                           showUploadMessage(
                             context,
                             'Uploading file...',
                             showLoading: true,
                           );
-                          selectedUploadedFile = FFUploadedFile(
-                            name: selectedFile.storagePath.split('/').last,
-                            bytes: selectedFile.bytes,
-                          );
-                          downloadUrl = await uploadData(
-                              selectedFile.storagePath, selectedFile.bytes);
+                          selectedUploadedFiles = selectedFiles
+                              .map((m) => FFUploadedFile(
+                                    name: m.storagePath.split('/').last,
+                                    bytes: m.bytes,
+                                  ))
+                              .toList();
+
+                          downloadUrls = (await Future.wait(
+                            selectedFiles.map(
+                              (f) async =>
+                                  await uploadData(f.storagePath, f.bytes),
+                            ),
+                          ))
+                              .where((u) => u != null)
+                              .map((u) => u!)
+                              .toList();
                         } finally {
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           _model.isDataUploading3 = false;
                         }
-                        if (selectedUploadedFile != null &&
-                            downloadUrl != null) {
+                        if (selectedUploadedFiles.length ==
+                                selectedFiles.length &&
+                            downloadUrls.length == selectedFiles.length) {
                           setState(() {
-                            _model.uploadedLocalFile3 = selectedUploadedFile!;
-                            _model.uploadedFileUrl3 = downloadUrl!;
+                            _model.uploadedLocalFile3 =
+                                selectedUploadedFiles.first;
+                            _model.uploadedFileUrl3 = downloadUrls.first;
                           });
                           showUploadMessage(
                             context,
@@ -359,6 +377,7 @@ class _UploaddocumentWidgetState extends State<UploaddocumentWidget> {
                       logFirebaseEvent('Column_update_app_state');
                       FFAppState().update(() {
                         FFAppState().pdf = _model.uploadedFileUrl3;
+                        FFAppState().uploaded = true;
                       });
                       logFirebaseEvent('Column_bottom_sheet');
                       Navigator.pop(context);

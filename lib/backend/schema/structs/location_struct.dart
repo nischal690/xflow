@@ -1,4 +1,5 @@
 // ignore_for_file: unnecessary_getters_setters
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -164,6 +165,22 @@ class LocationStruct extends FFFirebaseStruct {
 
   @override
   String toString() => 'LocationStruct(${toMap()})';
+
+  @override
+  bool operator ==(Object other) {
+    return other is LocationStruct &&
+        latLang == other.latLang &&
+        name == other.name &&
+        address == other.address &&
+        city == other.city &&
+        state == other.state &&
+        country == other.country &&
+        zipcode == other.zipcode;
+  }
+
+  @override
+  int get hashCode => const ListEquality()
+      .hash([latLang, name, address, city, state, country, zipcode]);
 }
 
 LocationStruct createLocationStruct({
@@ -198,10 +215,13 @@ LocationStruct createLocationStruct({
 LocationStruct? updateLocationStruct(
   LocationStruct? location, {
   bool clearUnsetFields = true,
+  bool create = false,
 }) =>
     location
-      ?..firestoreUtilData =
-          FirestoreUtilData(clearUnsetFields: clearUnsetFields);
+      ?..firestoreUtilData = FirestoreUtilData(
+        clearUnsetFields: clearUnsetFields,
+        create: create,
+      );
 
 void addLocationStructData(
   Map<String, dynamic> firestoreData,
@@ -217,14 +237,17 @@ void addLocationStructData(
     firestoreData[fieldName] = FieldValue.delete();
     return;
   }
-  if (!forFieldValue && location.firestoreUtilData.clearUnsetFields) {
+  final clearFields =
+      !forFieldValue && location.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
     firestoreData[fieldName] = <String, dynamic>{};
   }
   final locationData = getLocationFirestoreData(location, forFieldValue);
   final nestedData = locationData.map((k, v) => MapEntry('$fieldName.$k', v));
 
-  final create = location.firestoreUtilData.create;
-  firestoreData.addAll(create ? mergeNestedFields(nestedData) : nestedData);
+  final mergeFields = location.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
 }
 
 Map<String, dynamic> getLocationFirestoreData(

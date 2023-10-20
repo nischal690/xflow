@@ -8,6 +8,7 @@ import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -39,8 +40,6 @@ class _UserpostWidgetState extends State<UserpostWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UserpostModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -66,7 +65,9 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
-                  color: Color(0xEA000000),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Color(0xEA000000),
+                  ),
                 ),
               ),
             );
@@ -102,7 +103,9 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                             width: 50.0,
                             height: 50.0,
                             child: CircularProgressIndicator(
-                              color: Color(0xEA000000),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xEA000000),
+                              ),
                             ),
                           ),
                         );
@@ -193,11 +196,10 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                     backgroundColor: Colors.white,
                                     enableDrag: false,
                                     context: context,
-                                    builder: (bottomSheetContext) {
+                                    builder: (context) {
                                       return Padding(
                                         padding:
-                                            MediaQuery.of(bottomSheetContext)
-                                                .viewInsets,
+                                            MediaQuery.viewInsetsOf(context),
                                         child: Container(
                                           height: 458.0,
                                           child: PostSettingWidget(
@@ -208,7 +210,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                         ),
                                       );
                                     },
-                                  ).then((value) => setState(() {}));
+                                  ).then((value) => safeSetState(() {}));
                                 },
                                 child: Icon(
                                   Icons.more_vert,
@@ -232,7 +234,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -295,7 +297,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -328,7 +330,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -366,7 +368,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                             'Adventure',
                                         child: Align(
                                           alignment:
-                                              AlignmentDirectional(0.0, 0.0),
+                                              AlignmentDirectional(0.00, 0.00),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -403,7 +405,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -437,7 +439,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -471,7 +473,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -505,7 +507,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                       ),
                                       child: Align(
                                         alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                            AlignmentDirectional(0.00, 0.00),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -665,7 +667,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                             Stack(
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: AlignmentDirectional(0.00, 0.00),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         9.0, 0.0, 0.0, 0.0),
@@ -797,7 +799,10 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                             width: 50.0,
                                             height: 50.0,
                                             child: CircularProgressIndicator(
-                                              color: Color(0xEA000000),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                Color(0xEA000000),
+                                              ),
                                             ),
                                           ),
                                         );
@@ -890,20 +895,18 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                           'USERPOST_COMP_Stack_su3k92yo_ON_TAP');
                                       logFirebaseEvent('Stack_backend_call');
 
-                                      final userspostUpdateData =
-                                          createUserspostRecordData(
-                                        emoji: true,
-                                      );
                                       await containerUserspostRecord.reference
-                                          .update(userspostUpdateData);
+                                          .update(createUserspostRecordData(
+                                        emoji: true,
+                                      ));
                                     },
                                     child: Stack(
                                       children: [
                                         if (containerUserspostRecord.hearts
                                             .contains(currentUserReference))
                                           Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                            alignment: AlignmentDirectional(
+                                                0.00, 0.00),
                                             child: Container(
                                               width: 30.0,
                                               height: 30.0,
@@ -982,7 +985,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
 
                                         context.pushNamed(
                                           'Postdetails',
-                                          queryParams: {
+                                          queryParameters: {
                                             'userpostref': serializeParam(
                                               containerUserspostRecord
                                                   .reference,
@@ -1027,14 +1030,17 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                               'USERPOST_COMP_Icon_z3iyxyuy_ON_TAP');
                                           logFirebaseEvent('Icon_backend_call');
 
-                                          final usersUpdateData = {
-                                            'savedPosts':
-                                                FieldValue.arrayUnion([
-                                              containerUserspostRecord.reference
-                                            ]),
-                                          };
-                                          await currentUserReference!
-                                              .update(usersUpdateData);
+                                          await currentUserReference!.update({
+                                            ...mapToFirestore(
+                                              {
+                                                'savedPosts':
+                                                    FieldValue.arrayUnion([
+                                                  containerUserspostRecord
+                                                      .reference
+                                                ]),
+                                              },
+                                            ),
+                                          });
                                         },
                                         child: Icon(
                                           FFIcons.ksave2,
@@ -1058,14 +1064,17 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                                               'USERPOST_COMP_Icon_11jd9ftu_ON_TAP');
                                           logFirebaseEvent('Icon_backend_call');
 
-                                          final usersUpdateData = {
-                                            'savedPosts':
-                                                FieldValue.arrayRemove([
-                                              containerUserspostRecord.reference
-                                            ]),
-                                          };
-                                          await currentUserReference!
-                                              .update(usersUpdateData);
+                                          await currentUserReference!.update({
+                                            ...mapToFirestore(
+                                              {
+                                                'savedPosts':
+                                                    FieldValue.arrayRemove([
+                                                  containerUserspostRecord
+                                                      .reference
+                                                ]),
+                                              },
+                                            ),
+                                          });
                                         },
                                         child: Icon(
                                           FFIcons.ksave2,
@@ -1081,7 +1090,7 @@ class _UserpostWidgetState extends State<UserpostWidget> {
                           ),
                           if (containerUserspostRecord.emoji)
                             Align(
-                              alignment: AlignmentDirectional(-0.5, 0.1),
+                              alignment: AlignmentDirectional(-0.50, 0.10),
                               child: Container(
                                 height: 50.0,
                                 decoration: BoxDecoration(

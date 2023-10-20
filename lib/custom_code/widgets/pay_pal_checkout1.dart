@@ -29,75 +29,80 @@ class PayPalCheckout1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: TextButton(
-        onPressed: () async {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => PaypalCheckout(
-              sandboxMode: true,
-              clientId:
-                  "AbNidbaBqhsN8mk6f7qleHxVa5mP78eHK2BwuNbws-TtqiT-tQNwQGYhKpXcUgY4VpSYJu9EOKXuGRf9",
-              secretKey:
-                  "ELwfzPjhjKgNx43-zNuM9_Om42kwYelzG_fIR37yb9-IgA--_-ow6jJyfO461xYK8mac574rxHT2HVew",
-              returnURL: "success.snippetcoder.com",
-              cancelURL: "cancel.snippetcoder.com",
-              transactions: [
-                {
-                  "amount": {
-                    "total": amount,
-                    "currency": currencyname,
-                    "details": {
-                      "subtotal": '70',
-                      "shipping": '0',
-                      "shipping_discount": 0
-                    }
-                  },
-                  "description": "The payment transaction description.",
-                  // "payment_options": {
-                  //   "allowed_payment_method":
-                  //       "INSTANT_FUNDING_SOURCE"
-                  // },
-                  "item_list": {
-                    "items": [
-                      {
-                        "name": "Apple",
-                        "quantity": 4,
-                        "price": '5',
-                        "currency": "USD"
-                      },
-                      {
-                        "name": "Pineapple",
-                        "quantity": 5,
-                        "price": '10',
-                        "currency": "USD"
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: ElevatedButton(
+          onPressed: () async {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) => PaypalCheckout(
+                sandboxMode: false,
+                clientId:
+                    "AakLZLcCCg8iFBP6BrZhWxMxo2FuRZ0TLoiK86xw0sdqBmKWvh3d6v9TXntS2l2Q11yoMDAG4HhdMxxd",
+                secretKey:
+                    "EDreZgsSGMuKYwpPGTedUVECUkoNnovw5ovWEHI4VQjDlWb0Dy9pd1oX9rXaTy3IKIS-yepCmDuOR6N7",
+                returnURL: "success.snippetcoder.com",
+                cancelURL: "cancel.snippetcoder.com",
+                transactions: [
+                  {
+                    "amount": {
+                      "total": amount,
+                      "currency": currencyname,
+                      "details": {
+                        "subtotal": amount,
+                        "shipping": '0',
+                        "shipping_discount": 0
                       }
-                    ],
+                    },
+                    "description": "The payment transaction description.",
+                    // "payment_options": {
+                    //   "allowed_payment_method":
+                    //       "INSTANT_FUNDING_SOURCE"
+                    // },
+                    "item_list": {
+                      "items": [
+                        {
+                          "name": "ADD Wallet",
+                          "quantity": 1,
+                          "price": amount,
+                          "currency": currencyname
+                        },
+                      ],
+                    }
                   }
-                }
-              ],
-              note: "Contact us for any questions on your order.",
-              onSuccess: (Map params) async {
-                print("onSuccess: $params");
-              },
-              onError: (error) {
-                print("onError: $error");
-                Navigator.pop(context);
-              },
-              onCancel: () {
-                print('cancelled:');
-              },
+                ],
+                note: "Contact us for any questions on your order.",
+                onSuccess: (Map params) async {
+                  print("onSuccess: $params");
+                },
+                onError: (error) {
+                  print("onError: $error");
+                  Navigator.pop(context);
+                },
+                onCancel: () {
+                  print('cancelled:');
+                },
+              ),
+            ));
+          },
+          style: ElevatedButton.styleFrom(
+            primary: const Color(0xFF1A1C26),
+            onPrimary: const Color(0xFF1A1C26),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-          ));
-        },
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.teal,
-          foregroundColor: Colors.white,
-          shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(1),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'Checkout',
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFE2F692),
+              ),
             ),
           ),
         ),
-        child: const Text('Checkout'),
       ),
     );
   }

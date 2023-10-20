@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_transactions_model.dart';
@@ -27,8 +28,6 @@ class _EmptyTransactionsWidgetState extends State<EmptyTransactionsWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyTransactionsModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,7 +57,7 @@ class _EmptyTransactionsWidgetState extends State<EmptyTransactionsWidget> {
         borderRadius: BorderRadius.circular(28.0),
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.0, 0.0),
+        alignment: AlignmentDirectional(0.00, 0.00),
         child: Text(
           'No transactions yet!!',
           style: FlutterFlowTheme.of(context).bodyMedium.override(

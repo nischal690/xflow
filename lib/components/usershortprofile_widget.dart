@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'usershortprofile_model.dart';
@@ -33,8 +34,6 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => UsershortprofileModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,7 +57,9 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
               width: 50.0,
               height: 50.0,
               child: CircularProgressIndicator(
-                color: Color(0xEA000000),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Color(0xEA000000),
+                ),
               ),
             ),
           );
@@ -112,15 +113,6 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
                                     ),
                               ),
                             ),
-                            Text(
-                              containerUsersRecord.uid,
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    lineHeight: 1.5,
-                                  ),
-                            ),
                           ],
                         ),
                       ),
@@ -137,7 +129,7 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
                           borderRadius: BorderRadius.circular(100.0),
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: AlignmentDirectional(0.00, 0.00),
                           child: Text(
                             'Follow',
                             style: FlutterFlowTheme.of(context)
@@ -168,13 +160,29 @@ class _UsershortprofileWidgetState extends State<UsershortprofileWidget> {
                   ),
                 ],
               ),
-              Text(
-                'From ',
-                style: FlutterFlowTheme.of(context).bodyMedium,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'From  ',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                  Text(
+                    containerUsersRecord.residentialLocation.country,
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ],
               ),
-              Text(
-                'Presently in ',
-                style: FlutterFlowTheme.of(context).bodyMedium,
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Currently  in ',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ],
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'verify_model.dart';
@@ -28,8 +29,6 @@ class _VerifyWidgetState extends State<VerifyWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => VerifyModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -50,7 +49,7 @@ class _VerifyWidgetState extends State<VerifyWidget> {
         color: Color(0x00FFFFFF),
       ),
       child: Align(
-        alignment: AlignmentDirectional(0.0, 0.0),
+        alignment: AlignmentDirectional(0.00, 0.00),
         child: Container(
           width: double.infinity,
           height: 480.0,
@@ -94,7 +93,7 @@ class _VerifyWidgetState extends State<VerifyWidget> {
 
                     context.pushNamed(
                       'profile',
-                      queryParams: {
+                      queryParameters: {
                         'profileRef': serializeParam(
                           currentUserReference,
                           ParamType.DocumentReference,

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'payment_model.dart';
@@ -30,8 +31,6 @@ class _PaymentWidgetState extends State<PaymentWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PaymentModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -80,7 +79,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
-                    context.goNamedAuth('landingscreen2', context.mounted);
+                    context.goNamedAuth('landingscreen', context.mounted);
                   },
                   child: Container(
                     width: double.infinity,
@@ -112,12 +111,10 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                                         'PAYMENT_COMP_Text_4v0sl3ta_ON_TAP');
                                     logFirebaseEvent('Text_backend_call');
 
-                                    final usersUpdateData =
-                                        createUsersRecordData(
-                                      waitlistjoined: true,
-                                    );
                                     await currentUserReference!
-                                        .update(usersUpdateData);
+                                        .update(createUsersRecordData(
+                                      waitlistjoined: true,
+                                    ));
                                   },
                                   child: Text(
                                     'Join Waitlist',
@@ -160,63 +157,51 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 20.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    logFirebaseEvent('PAYMENT_COMP_Container_xw65n3zo_ON_TAP');
-                    logFirebaseEvent('Container_navigate_to');
-
-                    context.pushNamed('Community');
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 52.0,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF1A1C26),
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 20.0,
-                            height: 20.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: Image.asset(
-                                  'assets/images/Vector_(3).png',
-                                ).image,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 52.0,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF1A1C26),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 20.0,
+                          height: 20.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            image: DecorationImage(
+                              fit: BoxFit.contain,
+                              image: Image.asset(
+                                'assets/images/Vector_(3).png',
+                              ).image,
                             ),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Community ',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    color: Color(0xFFE2F692),
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 0.0, 0.0),
+                          child: Text(
+                            'Community ',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  color: Color(0xFFE2F692),
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

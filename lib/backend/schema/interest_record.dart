@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
+
 import '/backend/schema/util/firestore_util.dart';
 import '/backend/schema/util/schema_util.dart';
 
@@ -54,6 +56,14 @@ class InterestRecord extends FirestoreRecord {
   @override
   String toString() =>
       'InterestRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is InterestRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createInterestRecordData({
@@ -66,4 +76,19 @@ Map<String, dynamic> createInterestRecordData({
   );
 
   return firestoreData;
+}
+
+class InterestRecordDocumentEquality implements Equality<InterestRecord> {
+  const InterestRecordDocumentEquality();
+
+  @override
+  bool equals(InterestRecord? e1, InterestRecord? e2) {
+    return e1?.interestname == e2?.interestname;
+  }
+
+  @override
+  int hash(InterestRecord? e) => const ListEquality().hash([e?.interestname]);
+
+  @override
+  bool isValidKey(Object? o) => o is InterestRecord;
 }
