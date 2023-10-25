@@ -15,7 +15,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shake/shake.dart';
 import 'receiver_profile_india_model.dart';
 export 'receiver_profile_india_model.dart';
 
@@ -37,8 +36,6 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
   late ReceiverProfileIndiaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late ShakeDetector shakeDetector;
-  var shakeActionInProgress = false;
   var hasColumnTriggered = false;
   final animationsMap = {
     'columnOnActionTriggerAnimation': AnimationInfo(
@@ -63,62 +60,16 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'receiverProfileIndia'});
-    // On shake action.
-    shakeDetector = ShakeDetector.autoStart(
-      onPhoneShake: () async {
-        if (shakeActionInProgress) {
-          return;
-        }
-        shakeActionInProgress = true;
-        try {
-          logFirebaseEvent('RECEIVER_PROFILE_INDIA_receiverProfileIn');
-          logFirebaseEvent('receiverProfileIndia_backend_call');
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('RECEIVER_PROFILE_INDIA_receiverProfileIn');
+      logFirebaseEvent('receiverProfileIndia_backend_call');
 
-          await widget.transactiondocument!.reference
-              .update(createTransactionHistoryRecordData(
-            merchantid: valueOrDefault<String>(
-              functions
-                  .fetchqrData(functions.extractPPInfoForFlutterFlow(
-                      widget.transactiondocument!.qRdata))
-                  .merchantid,
-              'N/A',
-            ),
-            billerid: valueOrDefault<String>(
-              functions
-                  .fetchqrData(functions.extractPPInfoForFlutterFlow(
-                      widget.transactiondocument!.qRdata))
-                  .billerid,
-              'N/A',
-            ),
-            walletID: valueOrDefault<String>(
-              functions
-                  .fetchqrData(functions.extractPPInfoForFlutterFlow(
-                      widget.transactiondocument!.qRdata))
-                  .walletID,
-              'N/A',
-            ),
-          ));
-          logFirebaseEvent('receiverProfileIndia_backend_call');
-
-          await widget.transactiondocument!.reference
-              .update(createTransactionHistoryRecordData(
-            upiid: valueOrDefault<String>(
-              functions
-                  .fetchqrDataUPI(widget.transactiondocument!.qRdata)
-                  .upiid,
-              'N/A',
-            ),
-            sentTo: valueOrDefault<String>(
-              functions.fetchqrDataUPI(widget.transactiondocument!.qRdata).name,
-              'N/A',
-            ),
-          ));
-        } finally {
-          shakeActionInProgress = false;
-        }
-      },
-      shakeThresholdGravity: 1.5,
-    );
+      await widget.transactiondocument!.reference
+          .update(createTransactionHistoryRecordData(
+        success: false,
+      ));
+    });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -134,7 +85,6 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
   void dispose() {
     _model.dispose();
 
-    shakeDetector.stopListening();
     super.dispose();
   }
 
@@ -581,6 +531,56 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
                                                 ],
                                               ),
                                             ),
+                                            if (widget.transactiondocument
+                                                        ?.phonenumber !=
+                                                    null &&
+                                                widget.transactiondocument
+                                                        ?.phonenumber !=
+                                                    '')
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 5.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Phone No : ',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 16.0,
+                                                                lineHeight: 1.2,
+                                                              ),
+                                                    ),
+                                                    Text(
+                                                      valueOrDefault<String>(
+                                                        widget
+                                                            .transactiondocument
+                                                            ?.phonenumber,
+                                                        'N/A',
+                                                      ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 16.0,
+                                                                lineHeight: 1.2,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -720,6 +720,24 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
                                                           ?.clear();
                                                     });
                                                     logFirebaseEvent(
+                                                        'Button_clear_text_fields_pin_codes');
+                                                    setState(() {
+                                                      _model.pinCodeController
+                                                          ?.clear();
+                                                      _model.textController
+                                                          ?.clear();
+                                                    });
+                                                    logFirebaseEvent(
+                                                        'Button_backend_call');
+
+                                                    await widget
+                                                        .transactiondocument!
+                                                        .reference
+                                                        .update(
+                                                            createTransactionHistoryRecordData(
+                                                      proceed: true,
+                                                    ));
+                                                    logFirebaseEvent(
                                                         'Button_navigate_to');
 
                                                     context.goNamed(
@@ -733,8 +751,7 @@ class _ReceiverProfileIndiaWidgetState extends State<ReceiverProfileIndiaWidget>
                                                         ),
                                                         'amount':
                                                             serializeParam(
-                                                          _model.textController
-                                                              .text,
+                                                          '',
                                                           ParamType.String,
                                                         ),
                                                       }.withoutNulls,

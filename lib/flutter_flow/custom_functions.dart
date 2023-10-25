@@ -1424,3 +1424,14 @@ String updatecurrencybalancefrominr(
     return oldBalance >= 0 ? oldBalance.toStringAsFixed(2) : "0.00";
   }
 }
+
+String checkthai(String phonenumber) {
+  // check if phone number is thailand or india
+  if (phonenumber.startsWith('+91')) {
+    return 'India';
+  } else if (phonenumber.startsWith('+66')) {
+    return 'Thailand';
+  } else {
+    return 'Unknown';
+  }
+}

@@ -91,6 +91,21 @@ class TransactionHistoryRecord extends FirestoreRecord {
   String get phonenumber => _phonenumber ?? '';
   bool hasPhonenumber() => _phonenumber != null;
 
+  // "proceed" field.
+  bool? _proceed;
+  bool get proceed => _proceed ?? false;
+  bool hasProceed() => _proceed != null;
+
+  // "previousthbbalance" field.
+  int? _previousthbbalance;
+  int get previousthbbalance => _previousthbbalance ?? 0;
+  bool hasPreviousthbbalance() => _previousthbbalance != null;
+
+  // "previouscurrecnybalance" field.
+  String? _previouscurrecnybalance;
+  String get previouscurrecnybalance => _previouscurrecnybalance ?? '';
+  bool hasPreviouscurrecnybalance() => _previouscurrecnybalance != null;
+
   void _initializeFields() {
     _sentTo = snapshotData['SentTo'] as String?;
     _currency = snapshotData['Currency'] as String?;
@@ -107,6 +122,10 @@ class TransactionHistoryRecord extends FirestoreRecord {
     _walletID = snapshotData['walletID'] as String?;
     _pay = snapshotData['pay'] as bool?;
     _phonenumber = snapshotData['phonenumber'] as String?;
+    _proceed = snapshotData['proceed'] as bool?;
+    _previousthbbalance = castToType<int>(snapshotData['previousthbbalance']);
+    _previouscurrecnybalance =
+        snapshotData['previouscurrecnybalance'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -160,6 +179,9 @@ Map<String, dynamic> createTransactionHistoryRecordData({
   String? walletID,
   bool? pay,
   String? phonenumber,
+  bool? proceed,
+  int? previousthbbalance,
+  String? previouscurrecnybalance,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -178,6 +200,9 @@ Map<String, dynamic> createTransactionHistoryRecordData({
       'walletID': walletID,
       'pay': pay,
       'phonenumber': phonenumber,
+      'proceed': proceed,
+      'previousthbbalance': previousthbbalance,
+      'previouscurrecnybalance': previouscurrecnybalance,
     }.withoutNulls,
   );
 
@@ -204,7 +229,10 @@ class TransactionHistoryRecordDocumentEquality
         e1?.upiid == e2?.upiid &&
         e1?.walletID == e2?.walletID &&
         e1?.pay == e2?.pay &&
-        e1?.phonenumber == e2?.phonenumber;
+        e1?.phonenumber == e2?.phonenumber &&
+        e1?.proceed == e2?.proceed &&
+        e1?.previousthbbalance == e2?.previousthbbalance &&
+        e1?.previouscurrecnybalance == e2?.previouscurrecnybalance;
   }
 
   @override
@@ -223,7 +251,10 @@ class TransactionHistoryRecordDocumentEquality
         e?.upiid,
         e?.walletID,
         e?.pay,
-        e?.phonenumber
+        e?.phonenumber,
+        e?.proceed,
+        e?.previousthbbalance,
+        e?.previouscurrecnybalance
       ]);
 
   @override

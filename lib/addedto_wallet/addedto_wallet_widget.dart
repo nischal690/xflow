@@ -425,9 +425,16 @@ class _AddedtoWalletWidgetState extends State<AddedtoWalletWidget> {
                               onTap: () async {
                                 logFirebaseEvent(
                                     'ADDEDTO_WALLET_Container_crmvs9er_ON_TAP');
+                                logFirebaseEvent('Container_update_app_state');
+                                FFAppState().update(() {
+                                  FFAppState().Home = true;
+                                  FFAppState().Transact = false;
+                                  FFAppState().History = false;
+                                  FFAppState().community = false;
+                                });
                                 logFirebaseEvent('Container_navigate_to');
 
-                                context.goNamed('HomePage');
+                                context.pushNamed('HomePage');
                               },
                               child: Container(
                                 width: 152.0,

@@ -96,7 +96,7 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
                           FFAppState().update(() {
                             FFAppState().paymentCountry = 'India';
                             FFAppState().shortform = 'IND';
-                            FFAppState().flag =
+                            FFAppState().paymentflag =
                                 'https://flagcdn.com/w40/in.png';
                           });
                           logFirebaseEvent('Row_bottom_sheet');
@@ -157,7 +157,7 @@ class _SelectCountryWidgetState extends State<SelectCountryWidget> {
                           FFAppState().update(() {
                             FFAppState().paymentCountry = 'Thailand';
                             FFAppState().shortform = 'THA';
-                            FFAppState().flag =
+                            FFAppState().paymentflag =
                                 'https://flagcdn.com/w40/th.png';
                           });
                           logFirebaseEvent('Row_bottom_sheet');

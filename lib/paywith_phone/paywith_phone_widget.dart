@@ -203,118 +203,128 @@ class _PaywithPhoneWidgetState extends State<PaywithPhoneWidget> {
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               '   Receiver Country : ',
                               style: FlutterFlowTheme.of(context).bodyMedium,
                             ),
-                            InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'PAYWITH_PHONE_Container_wlhi4iv4_ON_TAP');
-                                logFirebaseEvent('Container_bottom_sheet');
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: Container(
-                                          height: double.infinity,
-                                          child: SelectCountryWidget(),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 12.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'PAYWITH_PHONE_Container_wlhi4iv4_ON_TAP');
+                                  logFirebaseEvent('Container_bottom_sheet');
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return GestureDetector(
+                                        onTap: () => _model
+                                                .unfocusNode.canRequestFocus
+                                            ? FocusScope.of(context)
+                                                .requestFocus(
+                                                    _model.unfocusNode)
+                                            : FocusScope.of(context).unfocus(),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.viewInsetsOf(context),
+                                          child: Container(
+                                            height: double.infinity,
+                                            child: SelectCountryWidget(),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
-                              },
-                              child: Container(
-                                height: 36.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    if (FFAppState().shortform != null &&
-                                        FFAppState().shortform != '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            12.0, 8.0, 12.0, 8.0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 6.0, 0.0),
-                                              child: Container(
-                                                width: 20.0,
-                                                height: 20.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      FFAppState().flag,
-                                                    ).image,
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
+                                },
+                                child: Container(
+                                  height: 36.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      if (FFAppState().shortform != null &&
+                                          FFAppState().shortform != '')
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 8.0, 12.0, 8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 6.0, 0.0),
+                                                child: Container(
+                                                  width: 20.0,
+                                                  height: 20.0,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        FFAppState()
+                                                            .paymentflag,
+                                                      ).image,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0),
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
                                                 ),
                                               ),
-                                            ),
-                                            AutoSizeText(
-                                              FFAppState().shortform,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        lineHeight: 1.2,
-                                                      ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    if (FFAppState().shortform == null ||
-                                        FFAppState().shortform == '')
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 0.0, 5.0, 0.0),
-                                        child: AutoSizeText(
-                                          'Select Country',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Nunito',
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.bold,
-                                                lineHeight: 1.2,
+                                              AutoSizeText(
+                                                FFAppState().shortform,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          lineHeight: 1.2,
+                                                        ),
                                               ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                  ],
+                                      if (FFAppState().shortform == null ||
+                                          FFAppState().shortform == '')
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  5.0, 0.0, 5.0, 0.0),
+                                          child: AutoSizeText(
+                                            'Select Country',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  lineHeight: 1.2,
+                                                ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -392,44 +402,28 @@ class _PaywithPhoneWidgetState extends State<PaywithPhoneWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 0.0, 0.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'PAYWITH_PHONE_PAGE_Row_i2w0tmjd_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Row_navigate_to');
-
-                                              context
-                                                  .pushNamed('CountrySelector');
-                                            },
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.network(
-                                                    valueOrDefault<String>(
-                                                      FFAppState().flag,
-                                                      'https://flagcdn.com/w320/us.png',
-                                                    ),
-                                                    width: 46.0,
-                                                    height: 32.0,
-                                                    fit: BoxFit.cover,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                child: Image.network(
+                                                  valueOrDefault<String>(
+                                                    FFAppState().paymentflag,
+                                                    'https://flagcdn.com/w40/th.png',
                                                   ),
+                                                  width: 46.0,
+                                                  height: 32.0,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: Colors.black,
-                                                  size: 24.0,
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black,
+                                                size: 24.0,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -442,8 +436,8 @@ class _PaywithPhoneWidgetState extends State<PaywithPhoneWidget> {
                                   Text(
                                     valueOrDefault<String>(
                                       functions.getDialCode(
-                                          FFAppState().Countryname),
-                                      '+1',
+                                          FFAppState().paymentCountry),
+                                      '+66',
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -538,14 +532,163 @@ class _PaywithPhoneWidgetState extends State<PaywithPhoneWidget> {
                                 onPressed: () async {
                                   logFirebaseEvent(
                                       'PAYWITH_PHONE_PAGE_CONTINUE_BTN_ON_TAP');
-                                  logFirebaseEvent('Button_backend_call');
+                                  if (_model.textController.text != null &&
+                                      _model.textController.text != '') {
+                                    if (functions
+                                            .checkthai(valueOrDefault<String>(
+                                          '${valueOrDefault<String>(
+                                            functions.getDialCode(
+                                                FFAppState().paymentCountry),
+                                            '+66',
+                                          )}${_model.textController.text}',
+                                          '+66',
+                                        )) ==
+                                        'Thailand') {
+                                      logFirebaseEvent('Button_backend_call');
 
-                                  await TransactionHistoryRecord.collection
-                                      .doc()
-                                      .set(createTransactionHistoryRecordData(
-                                        phonenumber:
-                                            '${functions.getDialCode(FFAppState().Countryname)}${_model.textController.text}',
+                                      var transactionHistoryRecordReference1 =
+                                          TransactionHistoryRecord.collection
+                                              .doc();
+                                      await transactionHistoryRecordReference1
+                                          .set(
+                                              createTransactionHistoryRecordData(
+                                        phonenumber: '${valueOrDefault<String>(
+                                          functions.getDialCode(
+                                              FFAppState().paymentCountry),
+                                          '+66',
+                                        )}${_model.textController.text}',
+                                        by: currentUserReference,
+                                        country: 'Thailand',
+                                        transactiontime: getCurrentTimestamp,
                                       ));
+                                      _model.transact = TransactionHistoryRecord
+                                          .getDocumentFromData(
+                                              createTransactionHistoryRecordData(
+                                                phonenumber:
+                                                    '${valueOrDefault<String>(
+                                                  functions.getDialCode(
+                                                      FFAppState()
+                                                          .paymentCountry),
+                                                  '+66',
+                                                )}${_model.textController.text}',
+                                                by: currentUserReference,
+                                                country: 'Thailand',
+                                                transactiontime:
+                                                    getCurrentTimestamp,
+                                              ),
+                                              transactionHistoryRecordReference1);
+                                      logFirebaseEvent('Button_navigate_to');
+
+                                      context.goNamed(
+                                        'receiverProfile',
+                                        queryParameters: {
+                                          'transactiondocument': serializeParam(
+                                            _model.transact,
+                                            ParamType.Document,
+                                          ),
+                                        }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'transactiondocument':
+                                              _model.transact,
+                                        },
+                                      );
+                                    } else {
+                                      if (functions.checkthai(
+                                              '${valueOrDefault<String>(
+                                            functions.getDialCode(
+                                                FFAppState().paymentCountry),
+                                            '+66',
+                                          )}${_model.textController.text}') ==
+                                          'India') {
+                                        logFirebaseEvent('Button_backend_call');
+
+                                        var transactionHistoryRecordReference2 =
+                                            TransactionHistoryRecord.collection
+                                                .doc();
+                                        await transactionHistoryRecordReference2
+                                            .set(
+                                                createTransactionHistoryRecordData(
+                                          phonenumber:
+                                              '${valueOrDefault<String>(
+                                            functions.getDialCode(
+                                                FFAppState().paymentCountry),
+                                            '+66',
+                                          )}${_model.textController.text}',
+                                          by: currentUserReference,
+                                          country: 'India',
+                                          transactiontime: getCurrentTimestamp,
+                                        ));
+                                        _model.transact2 = TransactionHistoryRecord
+                                            .getDocumentFromData(
+                                                createTransactionHistoryRecordData(
+                                                  phonenumber:
+                                                      '${valueOrDefault<String>(
+                                                    functions.getDialCode(
+                                                        FFAppState()
+                                                            .paymentCountry),
+                                                    '+66',
+                                                  )}${_model.textController.text}',
+                                                  by: currentUserReference,
+                                                  country: 'India',
+                                                  transactiontime:
+                                                      getCurrentTimestamp,
+                                                ),
+                                                transactionHistoryRecordReference2);
+                                        logFirebaseEvent('Button_navigate_to');
+
+                                        context.goNamed(
+                                          'receiverProfileIndia',
+                                          queryParameters: {
+                                            'transactiondocument':
+                                                serializeParam(
+                                              _model.transact2,
+                                              ParamType.Document,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'transactiondocument':
+                                                _model.transact2,
+                                          },
+                                        );
+                                      } else {
+                                        logFirebaseEvent(
+                                            'Button_show_snack_bar');
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Select a Country',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor: Color(0xFF1A1C26),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  } else {
+                                    logFirebaseEvent('Button_show_snack_bar');
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Phone number is empty',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor: Color(0xFF1A1C26),
+                                      ),
+                                    );
+                                  }
+
+                                  setState(() {});
                                 },
                                 text: 'Continue',
                                 options: FFButtonOptions(

@@ -48,16 +48,25 @@ class _LoadingWidgetState extends State<LoadingWidget> {
       logFirebaseEvent('loading_backend_call');
 
       await currentUserReference!.update(createUsersRecordData(
-        balanceinTHB: functions.updatethbbalance(
-            valueOrDefault(currentUserDocument?.balanceinTHB, 0),
-            valueOrDefault<String>(
-              widget.amount,
-              '0',
-            )),
-        balanceinCurrency: functions.updatebalanceincurrency(
-            valueOrDefault(currentUserDocument?.conversionrate, 0.0),
-            valueOrDefault(currentUserDocument?.balanceinCurrency, ''),
-            widget.amount!),
+        balanceinTHB: valueOrDefault<int>(
+          functions.updatethbbalance(
+              valueOrDefault(currentUserDocument?.balanceinTHB, 0),
+              valueOrDefault<String>(
+                widget.transaction?.amount,
+                '100',
+              )),
+          50,
+        ),
+        balanceinCurrency: valueOrDefault<String>(
+          functions.updatebalanceincurrency(
+              valueOrDefault(currentUserDocument?.conversionrate, 0.0),
+              valueOrDefault(currentUserDocument?.balanceinCurrency, ''),
+              valueOrDefault<String>(
+                widget.transaction?.amount,
+                '100',
+              )),
+          '500',
+        ),
       ));
       logFirebaseEvent('loading_navigate_to');
 

@@ -37,10 +37,6 @@ class OTPverificationModel extends FlutterFlowModel<OTPverificationWidget> {
 
   void initState(BuildContext context) {
     pinCodeController = TextEditingController();
-    timerController.timer.setPresetTime(
-      mSec: 20000,
-      add: false,
-    );
   }
 
   void dispose() {

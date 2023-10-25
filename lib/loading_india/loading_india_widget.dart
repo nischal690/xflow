@@ -49,10 +49,10 @@ class _LoadingIndiaWidgetState extends State<LoadingIndiaWidget> {
       await currentUserReference!.update(createUsersRecordData(
         balanceinTHB: functions.updatethbfrominr(
             valueOrDefault(currentUserDocument?.balanceinTHB, 0),
-            widget.amount!),
+            widget.transaction!.amount),
         balanceinCurrency: functions.updatecurrencybalancefrominr(
             valueOrDefault(currentUserDocument?.balanceinCurrency, ''),
-            widget.amount!,
+            widget.transaction!.amount,
             valueOrDefault(currentUserDocument?.currencyselected, '')),
       ));
       logFirebaseEvent('loadingIndia_wait__delay');
@@ -158,27 +158,6 @@ class _LoadingIndiaWidgetState extends State<LoadingIndiaWidget> {
                           controllers: _model.riveAnimationControllers,
                         ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    valueOrDefault<String>(
-                      widget.amount,
-                      'N/A',
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium,
-                  ),
-                  AuthUserStreamWidget(
-                    builder: (context) => Text(
-                      valueOrDefault(currentUserDocument?.balanceinTHB, 0)
-                          .toString(),
-                      style: FlutterFlowTheme.of(context).bodyMedium,
-                    ),
-                  ),
-                  AuthUserStreamWidget(
-                    builder: (context) => Text(
-                      valueOrDefault(
-                          currentUserDocument?.balanceinCurrency, ''),
-                      style: FlutterFlowTheme.of(context).bodyMedium,
                     ),
                   ),
                 ],

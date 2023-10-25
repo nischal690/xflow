@@ -569,7 +569,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                                 BoxFit.cover,
                                                                             image:
                                                                                 Image.network(
-                                                                              FFAppState().flag,
+                                                                              FFAppState().paymentflag,
                                                                             ).image,
                                                                           ),
                                                                           borderRadius:
@@ -1140,6 +1140,55 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                             highlightColor: Colors.transparent,
                                             onTap: () async {
                                               logFirebaseEvent(
+                                                  'HOME_PAGE_PAGE_Column_kaw02xas_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Column_navigate_to');
+
+                                              context.pushNamed('paywithPhone');
+                                            },
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  width: 56.0,
+                                                  height: 56.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFF1A1C26),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.0),
+                                                  ),
+                                                  child: Icon(
+                                                    FFIcons.kcall,
+                                                    color: Color(0xF6E2F692),
+                                                    size: 24.0,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Phone',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Nunito',
+                                                        color:
+                                                            Color(0xFF101213),
+                                                        lineHeight: 1.2,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              logFirebaseEvent(
                                                   'HOME_PAGE_PAGE_Column_nrrc6lw8_ON_TAP');
                                               logFirebaseEvent(
                                                   'Column_navigate_to');
@@ -1169,110 +1218,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 ),
                                                 Text(
                                                   'Wallet',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            Color(0xFF101213),
-                                                        lineHeight: 1.2,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'HOME_PAGE_PAGE_Column_kaw02xas_ON_TAP');
-                                              logFirebaseEvent(
-                                                  'Column_backend_call');
-
-                                              var transactionHistoryRecordReference =
-                                                  TransactionHistoryRecord
-                                                      .collection
-                                                      .doc();
-                                              await transactionHistoryRecordReference
-                                                  .set(
-                                                      createTransactionHistoryRecordData(
-                                                country: 'India',
-                                                qRdata:
-                                                    'upi://pay?pa=nischal7328895064@paytm&pn=NISCHAL%20NAYAK&mc=0000&mode=02&purpose=00&orgid=159761',
-                                                transactiontime:
-                                                    getCurrentTimestamp,
-                                                by: currentUserReference,
-                                                success: false,
-                                              ));
-                                              _model.transactionCopy =
-                                                  TransactionHistoryRecord
-                                                      .getDocumentFromData(
-                                                          createTransactionHistoryRecordData(
-                                                            country: 'India',
-                                                            qRdata:
-                                                                'upi://pay?pa=nischal7328895064@paytm&pn=NISCHAL%20NAYAK&mc=0000&mode=02&purpose=00&orgid=159761',
-                                                            transactiontime:
-                                                                getCurrentTimestamp,
-                                                            by: currentUserReference,
-                                                            success: false,
-                                                          ),
-                                                          transactionHistoryRecordReference);
-                                              logFirebaseEvent(
-                                                  'Column_update_app_state');
-                                              FFAppState().update(() {
-                                                FFAppState().paymentCountry =
-                                                    'India';
-                                                FFAppState().shortform = 'IND';
-                                                FFAppState().flag =
-                                                    'https://flagcdn.com/w40/in.png';
-                                              });
-                                              logFirebaseEvent(
-                                                  'Column_navigate_to');
-
-                                              context.goNamed(
-                                                'receiverProfileIndia',
-                                                queryParameters: {
-                                                  'transactiondocument':
-                                                      serializeParam(
-                                                    _model.transactionCopy,
-                                                    ParamType.Document,
-                                                  ),
-                                                }.withoutNulls,
-                                                extra: <String, dynamic>{
-                                                  'transactiondocument':
-                                                      _model.transactionCopy,
-                                                },
-                                              );
-
-                                              setState(() {});
-                                            },
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  width: 56.0,
-                                                  height: 56.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1A1C26),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16.0),
-                                                  ),
-                                                  child: Icon(
-                                                    FFIcons.kmapConverted,
-                                                    color: Color(0xF6E2F692),
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Guide',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

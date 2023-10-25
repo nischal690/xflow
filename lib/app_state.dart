@@ -29,6 +29,9 @@ class FFAppState extends ChangeNotifier {
     _safeInit(() {
       _flag = prefs.getString('ff_flag') ?? _flag;
     });
+    _safeInit(() {
+      _paymentflag = prefs.getString('ff_paymentflag') ?? _paymentflag;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -365,6 +368,13 @@ class FFAppState extends ChangeNotifier {
   bool get uploaded => _uploaded;
   set uploaded(bool _value) {
     _uploaded = _value;
+  }
+
+  String _paymentflag = '';
+  String get paymentflag => _paymentflag;
+  set paymentflag(String _value) {
+    _paymentflag = _value;
+    prefs.setString('ff_paymentflag', _value);
   }
 }
 

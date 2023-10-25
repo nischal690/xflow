@@ -115,8 +115,9 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'PAYMENT_SUCCESSFUL_Icon_hv43yw9l_ON_TAP');
-                        logFirebaseEvent('Icon_navigate_back');
-                        context.safePop();
+                        logFirebaseEvent('Icon_navigate_to');
+
+                        context.goNamed('HomePage');
                       },
                       child: Icon(
                         Icons.arrow_back_ios_outlined,
@@ -194,7 +195,7 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                           children: [],
                         ),
                         Container(
-                          height: 310.0,
+                          height: 340.0,
                           decoration: BoxDecoration(
                             color: Color(0x00FFFFFF),
                           ),
@@ -296,7 +297,10 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                           '') ||
                                   (paymentSuccessfulTransactionHistoryRecord
                                           .walletID !=
-                                      ''))
+                                      '') ||
+                                  (paymentSuccessfulTransactionHistoryRecord
+                                          .walletID !=
+                                      'N/A'))
                                 Text(
                                   'Wallet ID : ${paymentSuccessfulTransactionHistoryRecord.walletID}',
                                   style: FlutterFlowTheme.of(context)
@@ -316,7 +320,10 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                           '') ||
                                   (paymentSuccessfulTransactionHistoryRecord
                                           .merchantid !=
-                                      ''))
+                                      '') ||
+                                  (paymentSuccessfulTransactionHistoryRecord
+                                          .merchantid !=
+                                      'N/A'))
                                 Text(
                                   'Merchant ID : ${paymentSuccessfulTransactionHistoryRecord.merchantid}',
                                   style: FlutterFlowTheme.of(context)
@@ -327,6 +334,43 @@ class _PaymentSuccessfulWidgetState extends State<PaymentSuccessfulWidget> {
                                         fontWeight: FontWeight.w600,
                                         lineHeight: 1.2,
                                       ),
+                                ),
+                              if (paymentSuccessfulTransactionHistoryRecord
+                                          .phonenumber !=
+                                      null &&
+                                  paymentSuccessfulTransactionHistoryRecord
+                                          .phonenumber !=
+                                      '')
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 5.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Phone No :  ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 20.0,
+                                              lineHeight: 1.2,
+                                            ),
+                                      ),
+                                      Text(
+                                        paymentSuccessfulTransactionHistoryRecord
+                                            .phonenumber,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 18.0,
+                                              lineHeight: 1.2,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                             ],
                           ),

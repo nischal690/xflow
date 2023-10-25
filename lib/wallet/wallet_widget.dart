@@ -137,8 +137,9 @@ class _WalletWidgetState extends State<WalletWidget>
                   highlightColor: Colors.transparent,
                   onTap: () async {
                     logFirebaseEvent('WALLET_PAGE_Icon_85f8d03x_ON_TAP');
-                    logFirebaseEvent('Icon_navigate_back');
-                    context.safePop();
+                    logFirebaseEvent('Icon_navigate_to');
+
+                    context.goNamed('HomePage');
                   },
                   child: Icon(
                     Icons.arrow_back_ios_outlined,
@@ -318,7 +319,7 @@ class _WalletWidgetState extends State<WalletWidget>
                                                               image:
                                                                   Image.network(
                                                                 FFAppState()
-                                                                    .flag,
+                                                                    .paymentflag,
                                                               ).image,
                                                             ),
                                                             borderRadius:

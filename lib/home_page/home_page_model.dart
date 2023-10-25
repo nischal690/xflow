@@ -33,8 +33,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   TransactionHistoryRecord? transaction1;
   // Stores action output result for [Backend Call - Create Document] action in Column widget.
   TransactionHistoryRecord? transaction;
-  // Stores action output result for [Backend Call - Create Document] action in Column widget.
-  TransactionHistoryRecord? transactionCopy;
   // Model for navbar component.
   late NavbarModel navbarModel;
 

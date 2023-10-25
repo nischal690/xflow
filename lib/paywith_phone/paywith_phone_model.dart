@@ -22,6 +22,10 @@ class PaywithPhoneModel extends FlutterFlowModel<PaywithPhoneWidget> {
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  TransactionHistoryRecord? transact;
+  // Stores action output result for [Backend Call - Create Document] action in Button widget.
+  TransactionHistoryRecord? transact2;
 
   /// Initialization and disposal methods.
 

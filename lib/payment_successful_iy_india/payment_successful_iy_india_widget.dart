@@ -117,8 +117,9 @@ class _PaymentSuccessfulIyIndiaWidgetState
                       onTap: () async {
                         logFirebaseEvent(
                             'PAYMENT_SUCCESSFUL_IY_INDIA_Icon_2e32tab');
-                        logFirebaseEvent('Icon_navigate_back');
-                        context.safePop();
+                        logFirebaseEvent('Icon_navigate_to');
+
+                        context.goNamed('HomePage');
                       },
                       child: Icon(
                         Icons.arrow_back_ios_outlined,
@@ -289,17 +290,23 @@ class _PaymentSuccessfulIyIndiaWidgetState
                                   ),
                                 ],
                               ),
-                              Text(
-                                'UPI ID   : ',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Nunito',
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                      lineHeight: 1.2,
-                                    ),
-                              ),
+                              if (paymentSuccessfulIyIndiaTransactionHistoryRecord
+                                          .upiid !=
+                                      null &&
+                                  paymentSuccessfulIyIndiaTransactionHistoryRecord
+                                          .upiid !=
+                                      '')
+                                Text(
+                                  'UPI ID   : ',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600,
+                                        lineHeight: 1.2,
+                                      ),
+                                ),
                               Text(
                                 functions
                                     .fetchqrDataUPI(
@@ -315,6 +322,43 @@ class _PaymentSuccessfulIyIndiaWidgetState
                                       lineHeight: 1.2,
                                     ),
                               ),
+                              if (paymentSuccessfulIyIndiaTransactionHistoryRecord
+                                          .phonenumber !=
+                                      null &&
+                                  paymentSuccessfulIyIndiaTransactionHistoryRecord
+                                          .phonenumber !=
+                                      '')
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 5.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Phone No : ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 16.0,
+                                              lineHeight: 1.2,
+                                            ),
+                                      ),
+                                      Text(
+                                        paymentSuccessfulIyIndiaTransactionHistoryRecord
+                                            .phonenumber,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              fontSize: 16.0,
+                                              lineHeight: 1.2,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ],
                           ),
                         ),

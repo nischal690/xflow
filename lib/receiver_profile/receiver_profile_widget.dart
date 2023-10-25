@@ -79,6 +79,12 @@ class _ReceiverProfileWidgetState extends State<ReceiverProfileWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('RECEIVER_PROFILE_receiverProfile_ON_INIT');
+      logFirebaseEvent('receiverProfile_backend_call');
+
+      await widget.transactiondocument!.reference
+          .update(createTransactionHistoryRecordData(
+        success: false,
+      ));
       if (widget.transactiondocument?.country == 'Thailand') {
         logFirebaseEvent('receiverProfile_backend_call');
 
@@ -727,271 +733,56 @@ class _ReceiverProfileWidgetState extends State<ReceiverProfileWidget>
                                                   ],
                                                 ),
                                               ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (widget.transactiondocument?.country == 'India')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              20.0, 0.0, 20.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: BorderRadius.circular(24.0),
-                              border: Border.all(
-                                color: Color(0xFFE8E8E9),
-                                width: 1.0,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 20.0, 20.0, 20.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  border: Border.all(
-                                    color: Color(0xFFE8E8E9),
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 12.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 6.0, 0.0),
-                                            child: Text(
-                                              'Show general info',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 16.0,
-                                                        lineHeight: 1.2,
+                                            if (widget.transactiondocument
+                                                        ?.phonenumber !=
+                                                    null &&
+                                                widget.transactiondocument
+                                                        ?.phonenumber !=
+                                                    '')
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 5.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Phone No :  ',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 16.0,
+                                                                lineHeight: 1.2,
+                                                              ),
+                                                    ),
+                                                    Text(
+                                                      valueOrDefault<String>(
+                                                        widget
+                                                            .transactiondocument
+                                                            ?.phonenumber,
+                                                        'n/A',
                                                       ),
-                                            ),
-                                          ),
-                                          if (_model.showinfo)
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'RECEIVER_PROFILE_Container_m6rzcb58_ON_T');
-                                                  logFirebaseEvent(
-                                                      'Container_update_page_state');
-                                                  setState(() {
-                                                    _model.showinfo = false;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1A1C26),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.00, 0.00),
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons.angleUp,
-                                                      color: Color(0xFFE2F692),
-                                                      size: 12.0,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                fontSize: 12.0,
+                                                                lineHeight: 1.2,
+                                                              ),
                                                     ),
-                                                  ),
+                                                  ],
                                                 ),
                                               ),
-                                            ),
-                                          if (!_model.showinfo)
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  logFirebaseEvent(
-                                                      'RECEIVER_PROFILE_Container_zoavxtsp_ON_T');
-                                                  logFirebaseEvent(
-                                                      'Container_update_page_state');
-                                                  setState(() {
-                                                    _model.showinfo = true;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  width: 20.0,
-                                                  height: 20.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF1A1C26),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.00, 0.00),
-                                                    child: FaIcon(
-                                                      FontAwesomeIcons
-                                                          .angleDown,
-                                                      color: Color(0xFFE2F692),
-                                                      size: 12.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(16.0),
-                                          bottomRight: Radius.circular(16.0),
-                                          topLeft: Radius.circular(0.0),
-                                          topRight: Radius.circular(0.0),
-                                        ),
-                                      ),
-                                      child: Visibility(
-                                        visible: _model.showinfo,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            if (_model.showinfo)
-                                              Divider(
-                                                thickness: 1.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .accent4,
-                                              ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Country :  ',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 16.0,
-                                                          lineHeight: 1.2,
-                                                        ),
-                                                  ),
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6.0),
-                                                    child: Image.asset(
-                                                      'assets/images/india.png',
-                                                      width: 33.0,
-                                                      height: 23.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    '  India',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 16.0,
-                                                          lineHeight: 1.2,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Name:  ',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 16.0,
-                                                          lineHeight: 1.2,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'UPI ID :  ',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Nunito',
-                                                          fontSize: 16.0,
-                                                          lineHeight: 1.2,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
                                           ],
                                         ),
                                       ),
@@ -1586,6 +1377,16 @@ class _ReceiverProfileWidgetState extends State<ReceiverProfileWidget>
                                                             .thailandtextfieldController
                                                             ?.clear();
                                                       });
+                                                      logFirebaseEvent(
+                                                          'Button_backend_call');
+
+                                                      await widget
+                                                          .transactiondocument!
+                                                          .reference
+                                                          .update(
+                                                              createTransactionHistoryRecordData(
+                                                        proceed: true,
+                                                      ));
                                                       logFirebaseEvent(
                                                           'Button_navigate_to');
 
