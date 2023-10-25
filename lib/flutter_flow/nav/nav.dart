@@ -80,14 +80,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? HomePageWidget() : LandingscreenWidget(),
+          appStateNotifier.loggedIn ? HomePageWidget() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? HomePageWidget()
-              : LandingscreenWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? HomePageWidget() : LoginWidget(),
         ),
         FFRoute(
           name: 'Wallet',
@@ -455,7 +454,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/landingscreen';
+            return '/login';
           }
           return null;
         },

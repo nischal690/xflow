@@ -769,7 +769,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                                             .clearRedirectLocation();
 
                                         context.goNamedAuth(
-                                            'landingscreen', context.mounted);
+                                            'login', context.mounted);
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,

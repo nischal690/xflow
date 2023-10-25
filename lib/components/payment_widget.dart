@@ -79,7 +79,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
                     await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
-                    context.goNamedAuth('landingscreen', context.mounted);
+                    context.goNamedAuth('login', context.mounted);
                   },
                   child: Container(
                     width: double.infinity,
