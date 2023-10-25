@@ -21,14 +21,12 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget> {
   late LoginModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginModel());
-
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'login'});
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -39,23 +37,18 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
+    if (isIOS) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Theme.of(context).brightness,
+        systemStatusBarContrastEnforced: true,
+      ));
     }
-
     context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -99,12 +92,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                       children: [
                         Text(
                           'Login',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Nunito',
-                                    fontSize: 38.0,
-                                    fontWeight: FontWeight.w800,
-                                  ),
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .override(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 38.0,
+                                  fontWeight: FontWeight.w800),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -120,7 +113,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   color: Color(0x0D000000),
                                   offset: Offset(0.0, 6.0),
                                   spreadRadius: 1.0,
-                                )
+                                ),
                               ],
                               borderRadius: BorderRadius.circular(28.0),
                             ),
@@ -135,14 +128,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 8.0),
                                     child: Text(
-                                      'Phone no ',
+                                      'Phone no',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Nunito',
-                                            color: Color(0xFF1A1C26),
-                                            fontSize: 16.0,
-                                          ),
+                                              fontFamily: 'Nunito',
+                                              color: Color(0xFF1A1C26),
+                                              fontSize: 16.0),
                                     ),
                                   ),
                                   Container(
@@ -155,7 +147,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           color: Color(0x1A000000),
                                           offset: Offset(0.0, 2.0),
                                           spreadRadius: 0.0,
-                                        )
+                                        ),
                                       ],
                                       borderRadius: BorderRadius.circular(16.0),
                                       border: Border.all(
@@ -174,8 +166,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
+                                                padding:
+                                                    EdgeInsetsDirectional.fromSTEB(
                                                         16.0, 0.0, 0.0, 0.0),
                                                 child: InkWell(
                                                   splashColor:
@@ -191,16 +183,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                         'LOGIN_PAGE_Row_obf1ysbi_ON_TAP');
                                                     logFirebaseEvent(
                                                         'Row_navigate_to');
-
                                                     context.pushNamed(
                                                         'CountrySelector');
-
                                                     logFirebaseEvent(
                                                         'Row_update_app_state');
-                                                    setState(() {
-                                                      FFAppState().searchon =
-                                                          false;
-                                                    });
+                                                    if (mounted) {
+                                                      setState(() {
+                                                        FFAppState().searchon =
+                                                            false;
+                                                      });
+                                                    }
                                                   },
                                                   child: Row(
                                                     mainAxisSize:
@@ -208,11 +200,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     children: [
                                                       ClipRRect(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                            BorderRadius.circular(
+                                                                8.0),
                                                         child: Image.network(
-                                                          valueOrDefault<
-                                                              String>(
+                                                          valueOrDefault<String>(
                                                             FFAppState().flag,
                                                             'https://flagcdn.com/w320/us.png',
                                                           ),
@@ -246,11 +237,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                fontFamily: 'Nunito',
-                                                fontSize: 16.0,
-                                                fontWeight: FontWeight.bold,
-                                                lineHeight: 1.25,
-                                              ),
+                                                  fontFamily: 'Nunito',
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  lineHeight: 1.25),
                                         ),
                                         Expanded(
                                           child: TextFormField(
@@ -261,14 +251,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             obscureText: false,
                                             decoration: InputDecoration(
                                               hintText: 'Phone number',
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            Color(0xFF8C8D93),
-                                                      ),
+                                              hintStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                      fontFamily: 'Nunito',
+                                                      color:
+                                                          Color(0xFF8C8D93)),
                                               enabledBorder:
                                                   UnderlineInputBorder(
                                                 borderSide: BorderSide(
@@ -295,7 +284,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       Radius.circular(4.0),
                                                 ),
                                               ),
-                                              errorBorder: UnderlineInputBorder(
+                                              errorBorder:
+                                                  UnderlineInputBorder(
                                                 borderSide: BorderSide(
                                                   color: Color(0x00000000),
                                                   width: 1.0,
@@ -321,16 +311,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 ),
                                               ),
                                               contentPadding:
-                                                  EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 8.0, 0.0, 8.0),
+                                                  EdgeInsetsDirectional.fromSTEB(
+                                                      8.0, 8.0, 0.0, 8.0),
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
-                                                  fontFamily: 'Nunito',
-                                                  color: Colors.black,
-                                                ),
+                                                    fontFamily: 'Nunito',
+                                                    color: Colors.black),
                                             keyboardType: TextInputType.number,
                                             validator: _model
                                                 .textControllerValidator
@@ -357,14 +345,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             'LOGIN_PAGE_LOGIN_BTN_ON_DOUBLE_TAP');
                                         logFirebaseEvent(
                                             'Button_update_app_state');
-                                        setState(() {
-                                          FFAppState().phonenumber =
-                                              '${valueOrDefault<String>(
-                                            functions.getDialCode(
-                                                FFAppState().Countryname),
-                                            '+1',
-                                          )}${_model.textController.text}';
-                                        });
+                                        if (mounted) {
+                                          setState(() {
+                                            FFAppState().phonenumber =
+                                                '${valueOrDefault<String>(functions.getDialCode(FFAppState().Countryname), '+1',)}${_model.textController.text}';
+                                          });
+                                        }
                                         logFirebaseEvent('Button_auth');
                                         final phoneNumberVal =
                                             FFAppState().phonenumber;
@@ -397,30 +383,25 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           logFirebaseEvent(
                                               'LOGIN_PAGE_LOGIN_BTN_ON_TAP');
                                           var _shouldSetState = false;
-                                          if (functions
-                                                  .lengthofphonenumber(_model
-                                                      .textController.text)
-                                                  .toString() ==
+                                          if (functions.lengthofphonenumber(
+                                                  _model.textController.text)
+                                              .toString() ==
                                               '0') {
                                             logFirebaseEvent(
                                                 'Button_update_app_state');
                                             FFAppState().update(() {
-                                              FFAppState().registerscreen =
-                                                  false;
+                                              FFAppState().registerscreen = false;
                                             });
-                                            if (_shouldSetState)
+                                            if (_shouldSetState && mounted) {
                                               setState(() {});
+                                            }
                                             return;
                                           } else {
                                             logFirebaseEvent(
                                                 'Button_custom_action');
-                                            _model.usercheck = await actions
-                                                .checkUserExistsByCriteria(
-                                              '${valueOrDefault<String>(
-                                                functions.getDialCode(
-                                                    FFAppState().Countryname),
-                                                '+1',
-                                              )}${_model.textController.text}',
+                                            _model.usercheck =
+                                                await actions.checkUserExistsByCriteria(
+                                              '${valueOrDefault<String>(functions.getDialCode(FFAppState().Countryname), '+1',)}${_model.textController.text}',
                                               'phone_number',
                                             );
                                             _shouldSetState = true;
@@ -433,14 +414,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               });
                                               logFirebaseEvent(
                                                   'Button_update_app_state');
-                                              setState(() {
-                                                FFAppState().phonenumber =
-                                                    '${valueOrDefault<String>(
-                                                  functions.getDialCode(
-                                                      FFAppState().Countryname),
-                                                  '+1',
-                                                )}${_model.textController.text}';
-                                              });
+                                              if (mounted) {
+                                                setState(() {
+                                                  FFAppState().phonenumber =
+                                                      '${valueOrDefault<String>(functions.getDialCode(FFAppState().Countryname), '+1',)}${_model.textController.text}';
+                                                });
+                                              }
                                               logFirebaseEvent('Button_auth');
                                               final phoneNumberVal =
                                                   FFAppState().phonenumber;
@@ -475,17 +454,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 FFAppState().registerscreen =
                                                     false;
                                               });
-                                              if (_shouldSetState)
+                                              if (_shouldSetState && mounted) {
                                                 setState(() {});
+                                              }
                                               return;
                                             }
-
-                                            if (_shouldSetState)
+                                            if (_shouldSetState && mounted) {
                                               setState(() {});
+                                            }
                                             return;
                                           }
-
-                                          if (_shouldSetState) setState(() {});
+                                          if (_shouldSetState && mounted) {
+                                            setState(() {});
+                                          }
                                         },
                                         text: 'Login',
                                         icon: FaIcon(
@@ -495,21 +476,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         options: FFButtonOptions(
                                           width: double.infinity,
                                           height: 52.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: Color(0xFF1A1C26),
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: Color(0xFFE2F692),
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
+                                          textStyle: FlutterFlowTheme.of(context)
+                                              .titleSmall
+                                              .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: Color(0xFFE2F692),
+                                                  fontWeight: FontWeight.w800),
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
                                             width: 1.0,
@@ -573,19 +551,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   color: Color(0x40000000),
                                                   offset: Offset(0.0, 6.0),
                                                   spreadRadius: 0.0,
-                                                )
+                                                ),
                                               ],
                                               shape: BoxShape.circle,
                                             ),
                                             child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.00, 0.00),
+                                              alignment:
+                                                  AlignmentDirectional(0.00, 0.00),
                                               child: Container(
                                                 width: 24.0,
                                                 height: 24.0,
                                                 decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
+                                                  color: FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
                                                   shape: BoxShape.circle,
                                                 ),
@@ -598,21 +575,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
+                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                12.0, 0.0, 0.0, 0.0),
                                             child: Text(
                                               'Account Not Found',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        fontSize: 16.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        lineHeight: 1.25,
-                                                      ),
+                                              style: FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                      fontFamily: 'Nunito',
+                                                      fontSize: 16.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      lineHeight: 1.25),
                                             ),
                                           ),
                                         ],
@@ -629,7 +602,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                               color: Color(0x0D000000),
                                               offset: Offset(0.0, 3.11),
                                               spreadRadius: 0.52,
-                                            )
+                                            ),
                                           ],
                                           borderRadius:
                                               BorderRadius.circular(12.0),
@@ -645,8 +618,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             logFirebaseEvent(
                                                 'Icon_update_app_state');
                                             FFAppState().update(() {
-                                              FFAppState().registerscreen =
-                                                  true;
+                                              FFAppState().registerscreen = true;
                                             });
                                           },
                                           child: Icon(
@@ -662,7 +634,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         50.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'Please check your phone number  and try again.',
+                                      'Please check your phone number and try again.',
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
@@ -677,14 +649,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Dont have an account?',
+                              'Don\'t have an account?',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
-                                    fontFamily: 'Nunito',
-                                    fontSize: 16.0,
-                                    lineHeight: 1.2,
-                                  ),
+                                      fontFamily: 'Nunito',
+                                      fontSize: 16.0,
+                                      lineHeight: 1.2),
                             ),
                           ],
                         ),
@@ -700,7 +671,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                               logFirebaseEvent(
                                   'LOGIN_PAGE_Container_vpe1hnm1_ON_TAP');
                               logFirebaseEvent('Container_navigate_to');
-
                               context.pushNamed('Register');
                             },
                             child: Container(
@@ -713,28 +683,29 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     blurRadius: 4.0,
                                     color: Color(0x09000000),
                                     offset: Offset(0.0, 2.0),
-                                  )
+                                  ),
                                 ],
                                 borderRadius: BorderRadius.circular(16.0),
                                 border: Border.all(
-                                  color: Color(0xFF7768D8),
+                                  color: Color(0xFFE8E8E9),
                                   width: 1.0,
                                 ),
                               ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0.00, 0.00),
-                                child: Text(
-                                  'Create an account',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        color: Color(0xFF7768D8),
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                        lineHeight: 1.25,
-                                      ),
-                                ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Register',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                            fontFamily: 'Nunito',
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                            lineHeight: 1.25),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
